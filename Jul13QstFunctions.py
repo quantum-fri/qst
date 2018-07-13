@@ -5,7 +5,7 @@ import scipy.optimize as opt
 import warnings
 warnings.filterwarnings("ignore")
 
-fileList = ["d.txt","a.txt", "r.txt", "l.txt", "h.txt","v.txt"]
+fileList = ["sig.txt", "d.txt", "r.txt", "h.txt"]
 
 #Data from lightsOffNoLaser
 noiseMean = 7.282; noiseStd = 8.029
@@ -42,29 +42,8 @@ def getMeanVar(fileName):
 	result = [mean, numData, stdDev]
 	return result
 
-def errorCorrection1():
-	for list in resultList:
-		list[0] = list[0] - noiseMean
-		list[1] = (list[2]**2 + noiseStd**2)**(0.5)
-	
-def errorCorrection2():
-	temp = []
-	for i in range(0, len(resultList), 2):
-		countTotal = resultList[i][0] + resultList[i+1][0]
-		dev = (resultList[i][2]**(2) + resultList[i+1][2]**(2))**(0.5)
-		mean1 = (resultList[i][0])/(countTotal)
-		mean2 = (resultList[i+1][0])/(countTotal)
-		std1 = mean1*((resultList[i][2]**2)/(resultList[i][0]**2) + (dev**2)/(countTotal**2))**(0.5)
-		std2 = mean2*((resultList[i+1][2]**2)/(resultList[i+1][0]**2) + (dev**2)/(countTotal**2))**(0.5)
-		stokesMean = mean1 - mean2
-		stokesDev = (std1**(2) + std2**(2))**(0.5)
-		print("StokesMean: " + str(stokesMean))
-		print("StokesDeviation: " + str(stokesDev))
-		print("")
-		temp.append([stokesMean, stokesDev])
-	return temp
 
-resultList = []
+
 
 #Returns the fidelity given the stokesParameters calculated from QST and the expected state
 def fidelity(stokesParams, expected):
@@ -79,15 +58,6 @@ def fidFromDMats(dmat1, dmat2):
 	res = np.dot(sqrt1, np.dot(dmat2, sqrt1))
 	return (linalg.sqrtm(res).trace())**2
 
-
-def fidelityOld(pMatrix, diagError, expected):
-	print("")
-	fidelity = ((expected[0].conjugate()*expected[0])*pMatrix[0][0] + expected[0].conjugate()*expected[1]*pMatrix[0][1] + expected[1].conjugate()*expected[0]*pMatrix[1][0] + (expected[1].conjugate()*expected[1])*pMatrix[1][1])
-	error = (((expected[0]**2)*diagError[0])**2 + (expected[0]*expected[1]*diagError[1])**2 + (expected[1].conjugate()*expected[0]*diagError[1])**2 + ((expected[1]**2)*diagError[0])**2)**(0.5)
-	print("")
-	print("The fidelity is :" + str(fidelity))
-	print("The error is: " + str(error))
-	return fidelity, error
 
 def ei(parameters, function, errors):
 
@@ -117,21 +87,6 @@ def densityMatrix(params):
 	rho += Y*params[1]/2
 	rho += Z*params[2]/2
 	return rho
-
-def densityMatrixOld(s1, s2, s3): 
-	j1 = complex(0.5* s1[0], -0.5 * s2[0])
-	j2 = complex( 0.5 * s1[0],  0.5 * (s2[0]))
-	r1 = 0.5 * (1 + s3[0])
-	r2 = (0.5 * (1 - s3[0]))
-	print("--------------------------------------------")
-	print ("{0:.4g}\t {1:.4g}".format(r1, j1))
-	print ("{0:.4g}\t {1:.4g}".format(j2, r2))
-	print("--------------------------------------------")
-	print("Standard deviations:\nMain Diagonal\tSecondary Diagonal ")
-	mainDiagonalStd = 0.5 * s3[1]
-	secondDiagonalStd = 0.5* (s1[1]**2 + s2[1]**2)**(0.5)
-	print ("{0:.4g}\t\t{1:.4g}".format(mainDiagonalStd, secondDiagonalStd))
-	return [[r1, j1], [j2, r2]], [mainDiagonalStd, secondDiagonalStd]
 
 #Assuming only linear polarization, calculates the angle of the polarization
 def getAngle(pMatrix):
@@ -163,14 +118,18 @@ def getZ(lambdaH, lambdaV, lambdaDC):
 
 def pedanticError(resultList):
 	aDC = getAetas(noiseStd, 1008)
+
 	stokesParams = []
 	stokesErrors = []
-	for i in range(0, len(resultList), 2):
-		aH = getAetas(resultList[i][2], resultList[i][1])
-		aV = getAetas(resultList[i+1][2], resultList[i+1][1])
-		stokesErrors.append(ei([resultList[i][0], resultList[i+1][0], noiseMean], getZ, [aH, aV, aDC])[1])
-		stokesParams.append(2*getZ(resultList[i][0], resultList[i + 1][0], noiseMean)-1)
+	for i in range(1, len(resultList)):
+		aPsi = getAetas(resultList[i][2], resultList[i][1])
+		res = ei([resultList[0][0], resultList[i][0]], vectorProbs, [aPsi, aDC])
+		stokesParams.append(2*res[0] - 1)
+		stokesErrors.append(res[1])
 	return stokesParams, stokesErrors
+
+def vectorProbs(sig, count):
+	return (count - noiseMean)/(sig - noiseMean)
 
 
 #Returns the smushed stoke parameters and the updated errors
@@ -230,7 +189,7 @@ def getStokesParams(rho):
 	return stokeParams
 
 def main(expected): 
-
+	resultList = []
 	for x in fileList:
 		resultList.append(getMeanVar(x))
 
@@ -241,7 +200,8 @@ def main(expected):
 
 	print("----------------------------------------------")
 	# oldFidelity, oldError = fidelityOld(pMatrix, diagError, expected)
-
+	print("Density Matrix:\n", densityMatrix(stokesParams))
+	print("----------------------------------------------")
 	f = lambda x,y,z: fidelity([x,y,z], expected)
 	
 	smushParams, smushErrors = smush(stokesParams, stokesErrors)
@@ -260,16 +220,16 @@ def main(expected):
 	print("Expected X:", np.dot(expected.conj(), np.dot(X, expected)))
 	print("Expected Y:", np.dot(expected.conj(), np.dot(Y, expected)))
 	print("Expected Z:", np.dot(expected.conj(), np.dot(Z, expected)))
-	x0 = getT(densityMatrix(smushParams))
+	#x0 = getT(densityMatrix(smushParams))
 	#predictedT = np.matrix([x0[0], 0],[complex()])
-	aproximation = opt.fmin(maxLikelihood, x0, args=(resultList,), maxiter=10000)
-	rho = getRho(aproximation)
-	print(rho)
-	expected_m = np.matrix(expected).T
-	ex_density = expected_m*expected_m.H
-	print(ex_density)
-	fid2 = expected_m.H*rho*expected_m
-	print("new fidelity: %.5f" % fid2.real)
-	print("Old Density Matrix")
-	print(densityMatrix(smushParams))
-	print("The length of the vector is: ", stokesLength(getStokesParams(rho)))
+	#aproximation = opt.fmin(maxLikelihood, x0, args=(resultList,), maxiter=10000)
+	#rho = getRho(aproximation)
+	#print(rho)
+	#expected_m = np.matrix(expected).T
+	#ex_density = expected_m*expected_m.H
+	#print(ex_density)
+	#fid2 = expected_m.H*rho*expected_m
+	#print("new fidelity: %.5f" % fid2.real)
+	#print("Old Density Matrix")
+	#print(densityMatrix(smushParams))
+	#print("The length of the vector is: ", stokesLength(getStokesParams(rho)))
