@@ -16,7 +16,7 @@ def stateCalc(theta, phi):
 	co = 1/math.sqrt(2)
 	r = np.array([co, complex(0, co)])
 	l = np.array([co, complex(0, -1*co)])
-	psi = np.cos(theta/2) * r + (complex(np.cos(phi, np.sin(phi))) * np.sin(theta/2) * l
+	psi = np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
 	h = psi[0]
 	v = psi[1]
 	expected = [h, v]

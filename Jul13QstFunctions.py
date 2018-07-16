@@ -201,7 +201,7 @@ def main(expected):
 	print("----------------------------------------------")
 	# oldFidelity, oldError = fidelityOld(pMatrix, diagError, expected)
 	print("Density Matrix:\n", densityMatrix(stokesParams))
-	print("----------------------------------------------")
+	print("----------------------------------------------\n")
 	f = lambda x,y,z: fidelity([x,y,z], expected)
 	
 	smushParams, smushErrors = smush(stokesParams, stokesErrors)
@@ -214,7 +214,7 @@ def main(expected):
 	print("Fidelity: ", fid, "+-", err)
 	for i in range(3):
 		print("XYZ"[i] + ":",  smushParams[i], "+-", smushErrors[i])
-
+	print("")
 	expected = np.array(expected)
 	print(expected)
 	print("Expected X:", np.dot(expected.conj(), np.dot(X, expected)))

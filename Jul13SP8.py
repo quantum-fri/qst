@@ -4,7 +4,7 @@ import os, sys
 sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments")
 import Jun26QstFunctions as qst
 
-fileList = ["sig.txt", "0.txt",  "1.txt", "2.txt", "3.txt"]
+fileList = ["0.txt", "0p.txt", "1.txt", "1p.txt", "2.txt", "2p.txt", "3.txt", "3p.txt"]
 
 #Constants
 DARK_COUNT =  7.282
@@ -36,28 +36,26 @@ def getUnknownVector(ideals, measured, measuredError):
 	return np.dot(np.linalg.inv(ideals), measured), np.dot(np.linalg.inv(ideals), measuredError)
 
 def measureAndError(resultList):
-	aDC = qst.getAetas(noiseStd, 1008)
-
+	aDC = getAetas(noiseStd, 1008)
 	stokesParams = []
 	stokesErrors = []
-	for i in range(1, len(resultList)):
-		aPsi = qst.getAetas(resultList[i][2], resultList[i][1])
-		res = qst.ei([resultList[0][0], resultList[i][0]], vectorProbs, [aPsi, aDC])
-		stokesParams.append(res[0])
-		stokesErrors.append(res[1])
+	for i in range(0, len(resultList), 2):
+		aH = getAetas(resultList[i][2], resultList[i][1])
+		aV = getAetas(resultList[i+1][2], resultList[i+1][1])
+		stokesErrors.append(ei([resultList[i][0], resultList[i+1][0], noiseMean], getZ, [aH, aV, aDC])[1])
+		stokesParams.append(getZ(resultList[i][0], resultList[i + 1][0], noiseMean))
 	return stokesParams, stokesErrors
 
 
 def getStokesFromVector(vector, vectorError):
 	factor = vector[0]
-	print("facotr: " + str(factor))
 	vector = [entry/factor for entry in vector]
 	vector = vector[1:]
 	vector, err = qst.smush(vector, vectorError)
 	return vector, err
 
-def vectorProbs(sig, count):
-	return (count - DARK_COUNT)/(sig - DARK_COUNT)
+def getZ(lambdaH, lambdaV, lambdaDC):
+	return (lambdaH - lambdaDC)/(lambdaH + lambdaV - 2*lambdaDC)
 
 def unitTestStateCalc():
 	print("The state calculation given for R: ", stateCalc(0, 0))
@@ -75,10 +73,8 @@ def main(expected):
 	for thisFile in fileList:
 		resultList.append(qst.getMeanVar(thisFile))
 
-	measured, measuredError = measureAndError(resultList)
-	unknownVector, unknownError = getUnknownVector(ideals, measured, measuredError)
-	stokes, stokesErr = getStokesFromVector(unknownVector, unknownError) #calls qst.smush inside
-	dMatrix = qst.densityMatrix(stokes)
+	stokes, stokesError = measureAndError(resultList)
+	
 
 	f = lambda x,y,z: qst.fidelity([x,y,z], expected)
 	fid, err = qst.ei(stokes, f, stokesErr)
