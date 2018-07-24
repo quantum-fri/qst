@@ -1,0 +1,127 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-07-18
+Time (HH:MM:SS):	16:58:21
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	0.001
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	No
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          274 	
+        2	          298 	
+        3	          280 	
+        4	          304 	
+        5	          286 	
+        6	          308 	
+        7	          273 	
+        8	          266 	
+        9	          300 	
+       10	          286 	
+       11	          284 	
+       12	          270 	
+       13	          294 	
+       14	          287 	
+       15	          317 	
+       16	          261 	
+       17	          276 	
+       18	          290 	
+       19	          298 	
+       20	          284 	
+       21	          269 	
+       22	          265 	
+       23	          241 	
+       24	          272 	
+       25	          272 	
+       26	          243 	
+       27	          274 	
+       28	          264 	
+       29	          276 	
+       30	          286 	
+       31	          291 	
+       32	          294 	
+       33	          273 	
+       34	          284 	
+       35	          296 	
+       36	          285 	
+       37	          261 	
+       38	          260 	
+       39	          278 	
+       40	          282 	
+       41	          298 	
+       42	          311 	
+       43	          282 	
+       44	          278 	
+       45	          277 	
+       46	          281 	
+       47	          274 	
+       48	          267 	
+       49	          267 	
+       50	          295 	
+       51	          296 	
+       52	          286 	
+       53	          287 	
+       54	          276 	
+       55	          303 	
+       56	          250 	
+       57	          300 	
+       58	          266 	
+       59	          291 	
+       60	          278 	
+       61	          269 	
+       62	          279 	
+       63	          289 	
+       64	          279 	
+       65	          300 	
+       66	          293 	
+       67	          288 	
+       68	          287 	
+       69	          284 	
+       70	          278 	
+       71	          283 	
+       72	          288 	
+       73	          279 	
+       74	          284 	
+       75	          272 	
+       76	          279 	
+       77	          325 	
+       78	          288 	
+       79	          297 	
+       80	          286 	
+       81	          306 	
+       82	          321 	
+       83	          298 	
+       84	          287 	
+       85	          273 	
+       86	          292 	
+       87	          281 	
+       88	          278 	
+       89	          272 	
+       90	          266 	
+       91	          269 	
+       92	          291 	
+       93	          252 	
+       94	          301 	
+       95	          314 	
+       96	          253 	
+       97	          247 	
+       98	          279 	
+       99	          283 	
+      100	          263 	
+      101	          296 	
+      102	          268 	
+      103	          288 	
+      104	          248 	
