@@ -4,5 +4,5 @@ This repository contains data collected from the Quantum Computing branch of the
 
 # July13QstFunctions.py
 
-## getMeanVar(*file* filename):
+#### getMeanVar(*file* filename):
 calculates the mean and standard deviation from a file containing the number of photon counts/per bin  <br/><br/> **returns**  an array [mean, numCounts, standardDeviation]
