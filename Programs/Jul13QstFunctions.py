@@ -140,19 +140,19 @@ def qPlateStateCalc(theta):
 	print("|H>: " + str(h) + "\n|V>:" + str(v))
 	return expected
 
-def getAetas(std, size):
+def getEtas(std, size):
 	return 1.96*std/(size**(0.5))
 
 def getZ(lambdaH, lambdaV, lambdaDC):
 	return (lambdaH - lambdaDC)/(lambdaH + lambdaV - 2*lambdaDC)
 
 def pedanticError(resultList):
-	aDC = getAetas(noiseStd, 1008)
+	aDC = getEtas(noiseStd, 1008)
 
 	stokesParams = []
 	stokesErrors = []
 	for i in range(1, len(resultList)):
-		aPsi = getAetas(resultList[i][2], resultList[i][1])
+		aPsi = getEtas(resultList[i][2], resultList[i][1])
 		res = ei([resultList[0][0], resultList[i][0]], vectorProbs, [aPsi, aDC])
 		stokesParams.append(2*res[0] - 1)
 		stokesErrors.append(res[1])

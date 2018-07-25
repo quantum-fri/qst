@@ -52,7 +52,7 @@ def measureAndError(resultList):
 
 def getStokesFromVector(vector, vectorError):
 	factor = vector[0]
-	print("Tqshe Signal is: ", factor)
+	print("The Signal is: ", factor)
 	vector = [entry/factor for entry in vector]
 	vector = vector[1:]
 	vector, err = qst.smush(vector, vectorError)
