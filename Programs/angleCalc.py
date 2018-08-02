@@ -86,3 +86,41 @@ def waveplatesToMeasurePsi(stokesVector):
 def stateVectorToStokesVector(stateVector):
     return [np.asscalar(np.real(stateVector.getH() * (axis * stateVector))) for axis in [X,Y,Z]]
 
+#Calculates the quantum state vector coresponding to polar coordinates on the bloch sphere
+def stateCalc(theta, phi):
+	return np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
+
+def jonesQuarter(theta):
+    theta = math.radians(2 * theta)
+    q = np.matrix([[complex((np.cos(theta))**2, (np.sin(theta))**2), complex(1, -1)*(np.sin(theta))*(np.cos(theta))],
+    [complex(1, -1)*(np.sin(theta))*(np.cos(theta)), complex((np.sin(theta))**2, (np.cos(theta))**2)]])
+    return q
+
+def jonesHalf(theta):
+    theta = math.radians(2 * theta)
+    h = np.matrix([[np.cos(2*theta), np.sin(2*theta)], [np.sin(2*theta), -np.cos(2*theta)]])
+    return h
+
+#print("H", np.round(jonesQuarter(0) * h, 4))
+#print("R", np.round(jonesQuarter(45) * h, 4))
+#print("H", np.round(jonesQuarter(90) * h, 4))
+#print("L", np.round(jonesQuarter(-45) * h, 4))
+
+#print("H", np.round(jonesHalf(0) * h, 4))
+#print("D", np.round(jonesHalf(22.5) * h, 4))
+#print("A", np.round(jonesHalf(-22.5) * h, 4))
+#print("V", np.round(jonesHalf(45) * h, 4))
+#p rint("V", np.round(jonesHalf(-45) * h, 4))
+
+sicpovms = [[0, 1, 0]]
+for i in range(0,3):
+	sicpovms.append(stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
+for i in range(0, len(sicpovms)):
+   print("Psi", i, " ", waveplatesToMeasurePsi(sicpovms[i]))
+
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(r)))
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(l)))
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(d)))
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(a)))
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(v)))
+#print(waveplatesToMeasurePsi(stateVectorToStokesVector(h)))

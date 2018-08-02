@@ -5,7 +5,12 @@ from numpy import linalg
 import angleCalc as ang
 import Jul13QstFunctions as funcs
 import sys, os
+import Bloch
+import time
 sys.path.append(sys.argv[1])
+
+#This program is to be run by the QST.ahk script. It takes one command line argument: the folder containing data files.
+
 
 #Constants
 dcMean =  7.282 #dc = dark counts. These constants come from measurements with lights on and no laser
@@ -17,51 +22,89 @@ def stateCalc(theta, phi):
 
 #Constructs a random tetrahedron with all four vertices on the surface of the Bloch sphere
 tetrahedronVerticesIdeal = []
-isFlat = True
+#isFlat = True
 
-while isFlat:
-    isFlat = False
-    for i in range(0, 4):
-        theta = rand.uniform(0, math.pi)
-        phi = rand.uniform(0, 2 * math.pi)
-        tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(theta, phi)))
-    if linalg.matrix_rank(tetrahedronVerticesIdeal) == 4:
-        tetrahedronVerticesIdeal = []
-        isFlat = True
-        
+#while isFlat:
+#    isFlat = False
+#    #Loop makes four random points on the surface of the Bloch sphere by generating 4 pairs of random polar coords)
+#    for i in range(0, 4):
+#        theta = rand.uniform(0, math.pi)
+#        phi = rand.uniform(0, 2 * math.pi)
+#        tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(theta, phi)))
+#    #Insert 1 at the beginning of each row to make it 4x4 (necessary for rank check for nonflat tetrahedron)
+#    for row in tetrahedronVerticesIdeal:
+#        row.insert(0, 1)
+#    #Checks if the four points form a tetrahedron with positive volume
+#    if linalg.matrix_rank(tetrahedronVerticesIdeal) != 4:
+#        tetrahedronVerticesIdeal = []
+#        isFlat = True
+
+tetrahedronVerticesIdeal = [[0, 1, 0]]
+for i in range(0,3):
+	tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
+print(tetrahedronVerticesIdeal)
 #Adjusts ideal states to those we can actually measure
+#Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
+##tetrahedronVerticesIdeal = [row[1:] for row in tetrahedronVerticesIdeal]
 measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
+#Round values based on rotator precision and pass them back in so we know what states we are actually measuring
 measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
+print(measuringAngleInputsReal)
 tetrahedronVerticesReal = [ang.measuredStokesVector(*angles) for angles in measuringAngleInputsIdeal]
 
-##TO DO##
 #pass measuringAngleInputsReal to Kinesis/ahk
+with open("runData.txt", "w") as output:
+    print("Inside the loop")
+    for row in measuringAngleInputsReal:
+        output.write(str(row[0]) + " " + str(row[1]) + "\n")
 
+fileList = ["0", "1", "2", "3"]
 #Reads data
-resultList = []
-for fileName in fileList:
-    resultList.append(funcs.getAvgMeanVar(fileName))
 
-#Calculating the unknown vector and corresponding error
+resultList = []
+for fileNr in fileList:
+    fileName = os.path.join(sys.argv[1], fileNr + ".txt")
+    #Waits for each file to come in
+    while not os.path.exists(fileName):
+        print("waiting for", fileName)
+        print("in dir", os.listdir(sys.argv[1]))
+        time.sleep(5) 
+    
+             
+    print("Found file", fileName)
+    resultList.append(funcs.getMeanVar(fileName))
+   
+
+print("done reading files", resultList)
+print("-------------------------------")
+
+#Calculating the unknown vector and corresponding error - see lab manual for justification of our math
+#See other lab manual and Jul13QstFunctions.py for more documentation on purpose and use of ei for error analysis
 def unknownVectorElementCalc(countList, darkCount, idealList):
     trueCount = countList - darkCount
     return np.dot(trueCount, idealList)
-    
-    
-tetrahedronVerticesReal = [row.insert(0, 1) for row in tetrahedronVerticesReal]
+
+#re-insert the leading ones for the math to work
+for row in tetrahedronVerticesReal:
+    row.insert(0, 1)
+
 verticesInverse = linalg.inv(tetrahedronVerticesReal)
 etaDc = funcs.getEtas(dcStd, 1008)
 unknownErrorVector = []
 unknownStateVector= []
 means = np.array([entry[0] for entry in resultList])
 Etas = np.array([funcs.getEtas(entry[2], entry[1]) for entry in resultList])
-for i in range(0, len(resultList)):
-        unVectElCalc = lambda count, darkCount: unknownVectorElementCalc(count, darkCount, tetrahedronVerticesReal[i])
-        res = funcs.ei([means, dcMean], unVectElCalc, [Etas, etaDc])
-        unknownStateVector = res[0]
-        unknownErrorVector = res[1]
+unVectElCalc = lambda count, darkCount: unknownVectorElementCalc(count, darkCount, tetrahedronVerticesReal[i])
+for i in range(0, len(resultList)):  
+    res = funcs.ei([means, dcMean], unVectElCalc, [Etas, etaDc])
+    unknownStateVector.append(res[0])
+    unknownErrorVector.append(res[1])
 
-        
+print("Done with most calculation", unknownStateVector)
+print("-------------------------------")
+#Divide out the constant coefficient from the unknown vector of stokes parameters
+#We can do this because we know the first one ought to be identity with expectation of 1
+#We once again do this calculation through ei to our error values through properly
 factor = unknownStateVector[0]
 factorEta = unknownErrorVector[0]
 stokesVector = []
@@ -70,11 +113,11 @@ divide = lambda x, y: x/y
 
 for i in range(0, len(unknownStateVector)):
     res = funcs.ei([unknownStateVector[i], factor], divide, [unknownErrorVector[i], factorEta])
-    stokesVector = res[0]
-    stokesError = res[1]
+    stokesVector.append(res[0])
+    stokesError.append(res[1])
 
 stokesVector = stokesVector [1:]
-
-print(measuringAngleInputs)
-    
-
+stokesError = stokesError[1:]
+print("Final check point", stokesVector)
+Bloch.stokesToVector(stokesVector)
+Bloch.show()

@@ -1,6 +1,6 @@
 import os, sys
 import math
-sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments")
+sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments\\Programs")
 
 import SICPOVM
 theta = 0

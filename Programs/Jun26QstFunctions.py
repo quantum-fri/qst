@@ -4,6 +4,7 @@ import scipy.linalg as linalg
 import scipy.optimize as opt
 import warnings
 import Jul13QstFunctions as newer
+import Bloch
 warnings.filterwarnings("ignore")
 
 fileList = ["d","a", "r", "l", "h","v"]
@@ -19,7 +20,7 @@ Z = np.array([[1,0],[0,-1]])
 
 def getMeanVar(fileName):
 	print(fileName + ": ")
-	lines = [line.rstrip('\n') for line in open(fileName)]
+	lines = [line.rstrip('\n') for line in open(fileName + ".txt")]
 	lines = lines[23:]
 	sum = 0
 	numData = len(lines)
@@ -234,7 +235,8 @@ def getStokesParams(rho):
 def main(expected): 
 
 	for x in fileList:
-		resultList.append(newer.getAvgMeanVar(x))
+		#resultList.append(newer.getAvgMeanVar(x))
+		resultList.append(getMeanVar(x))
 
 	print("")
 	
@@ -275,3 +277,5 @@ def main(expected):
 	print("Old Density Matrix")
 	print(densityMatrix(smushParams))
 	print("The length of the vector is: ", stokesLength(getStokesParams(rho)))
+	Bloch.stokesToVector(*smushParams)
+	Bloch.show()

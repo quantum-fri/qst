@@ -18,8 +18,8 @@ Y = np.array([[0,-1j],[1j,0]])
 Z = np.array([[1,0],[0,-1]])
 
 def getMeanVar(fileName):
-	print(fileName + ": ")
-	lines = [line.rstrip('\n') for line in open(fileName + '.txt')]
+	#print(fileName + ": ")
+	lines = [line.rstrip('\n') for line in open(fileName)]
 	lines = lines[23:]
 	sum = 0
 	numData = len(lines)
