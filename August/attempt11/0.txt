@@ -1,0 +1,113 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-02
+Time (HH:MM:SS):	09:38:24
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          156 	
+        2	          153 	
+        3	          145 	
+        4	          151 	
+        5	          132 	
+        6	          128 	
+        7	          152 	
+        8	          134 	
+        9	          128 	
+       10	          157 	
+       11	          146 	
+       12	          138 	
+       13	          152 	
+       14	          153 	
+       15	          137 	
+       16	          171 	
+       17	          152 	
+       18	          159 	
+       19	          179 	
+       20	          126 	
+       21	          144 	
+       22	          140 	
+       23	          151 	
+       24	          153 	
+       25	          132 	
+       26	          159 	
+       27	          127 	
+       28	          151 	
+       29	          146 	
+       30	          141 	
+       31	          168 	
+       32	          155 	
+       33	          149 	
+       34	          160 	
+       35	          153 	
+       36	          127 	
+       37	          134 	
+       38	          149 	
+       39	          141 	
+       40	          143 	
+       41	          136 	
+       42	          151 	
+       43	          149 	
+       44	          123 	
+       45	          143 	
+       46	          157 	
+       47	          130 	
+       48	          157 	
+       49	          142 	
+       50	          150 	
+       51	          154 	
+       52	          131 	
+       53	          127 	
+       54	          136 	
+       55	          123 	
+       56	          145 	
+       57	          141 	
+       58	          163 	
+       59	          129 	
+       60	          146 	
+       61	          121 	
+       62	          147 	
+       63	          156 	
+       64	          142 	
+       65	          167 	
+       66	          158 	
+       67	          142 	
+       68	          150 	
+       69	          158 	
+       70	          132 	
+       71	          139 	
+       72	          129 	
+       73	          150 	
+       74	          155 	
+       75	          139 	
+       76	          141 	
+       77	          162 	
+       78	          141 	
+       79	          142 	
+       80	          160 	
+       81	          155 	
+       82	          141 	
+       83	          163 	
+       84	          143 	
+       85	          146 	
+       86	          131 	
+       87	          138 	
+       88	          138 	
+       89	          152 	
+       90	          143 	

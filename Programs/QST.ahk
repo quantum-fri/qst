@@ -93,8 +93,8 @@ hPrev := 0
 
 For i, fileName in files {
 
-    q := Mod(339 + anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
-    h := Mod(304 + anglesHalf[i], 360)  
+    q := Mod(334 + anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
+    h := Mod(305 + anglesHalf[i], 360)  
 
    
     WinActivate, Kinesis,, Thorlabs Single Photon Counter GUI
