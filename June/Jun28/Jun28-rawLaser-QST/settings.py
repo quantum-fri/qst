@@ -1,6 +1,6 @@
 import os, sys
-sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments\\Programs")
+sys.path.append("//Users//berny//Documents//workspace-dev//QST//qst//Programs")
 import Jun26QstFunctions
 
-expected = [1,1]
+expected = [0,1]
 Jun26QstFunctions.main(expected)
