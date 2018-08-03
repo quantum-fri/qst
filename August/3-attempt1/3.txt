@@ -1,0 +1,114 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-03
+Time (HH:MM:SS):	08:43:36
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          375 	
+        2	          355 	
+        3	          357 	
+        4	          341 	
+        5	          304 	
+        6	          282 	
+        7	          241 	
+        8	          243 	
+        9	          255 	
+       10	          231 	
+       11	          215 	
+       12	          217 	
+       13	          202 	
+       14	          223 	
+       15	          215 	
+       16	          197 	
+       17	          195 	
+       18	          215 	
+       19	          211 	
+       20	          211 	
+       21	          238 	
+       22	          225 	
+       23	          213 	
+       24	          217 	
+       25	          226 	
+       26	          209 	
+       27	          220 	
+       28	          204 	
+       29	          192 	
+       30	          232 	
+       31	          193 	
+       32	          222 	
+       33	          208 	
+       34	          204 	
+       35	          204 	
+       36	          205 	
+       37	          205 	
+       38	          211 	
+       39	          215 	
+       40	          194 	
+       41	          200 	
+       42	          187 	
+       43	          200 	
+       44	          206 	
+       45	          189 	
+       46	          238 	
+       47	          243 	
+       48	          202 	
+       49	          253 	
+       50	          193 	
+       51	          234 	
+       52	          208 	
+       53	          211 	
+       54	          239 	
+       55	          222 	
+       56	          215 	
+       57	          203 	
+       58	          185 	
+       59	          223 	
+       60	          193 	
+       61	          237 	
+       62	          212 	
+       63	          220 	
+       64	          207 	
+       65	          220 	
+       66	          231 	
+       67	          212 	
+       68	          237 	
+       69	          236 	
+       70	          221 	
+       71	          221 	
+       72	          219 	
+       73	          206 	
+       74	          224 	
+       75	          226 	
+       76	          208 	
+       77	          196 	
+       78	          240 	
+       79	          207 	
+       80	          212 	
+       81	          199 	
+       82	          215 	
+       83	          239 	
+       84	          225 	
+       85	          234 	
+       86	          228 	
+       87	          218 	
+       88	          243 	
+       89	          230 	
+       90	          246 	
+       91	          208 	

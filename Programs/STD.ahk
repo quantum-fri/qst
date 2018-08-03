@@ -5,8 +5,8 @@
 ;start/stop: 134, 356
 #WinActivateForce
 ;Hotkey: Q + S + T
-#if GetKeyState("q") && GetKeyState("s")
-t::
+#if GetKeyState("s") && GetKeyState("t")
+d::
 
 ;Settings
 CoordMode, Mouse, Screen
@@ -25,7 +25,7 @@ FileCreateDir, C:\Users\quantum\Desktop\QST experiments\%month%\%newFolder%
 thePath = C:\Users\quantum\Desktop\QST experiments\%month%\%newFolder%
 
 ;Names to loop over
-files := ["0", "1", "2", "3"]
+files := ["d", "a", "r", "l","h","v"]
 
 ;Make sure both of our lab equiment interfaces are ready for the script
 IfWinExist, Thorlabs `Single Photon Counter `GUI 
@@ -49,14 +49,14 @@ IfWinExist, Kinesis
 ;The tomography program that generates the random povm (a tetrahedron) and eventually runs the tomography calculation
 ;Run, C:\ProgramData\Anaconda3\python.exe Tomography.py %thePath%, C:\Users\quantum\Desktop\QST experiments\Programs
 WinActivate Anaconda Prompt
-Send, python Tomography.py "%thePath%"{Enter}
+Send, python stdTomo.py "%thePath%"{Enter}
 
 
 SleepCalculator(q, qPrev, h, hPrev) {
     theta := Max(Mod(q - qPrev, 180), Mod(h - hPrev, 180)) ; determines the largest angle of rotation for either of the rotators
     if (theta > 20) { ;Handles acceleration and max velocity
         return 1500 * ((theta - 20)/20.0 + 2)
-    } else { ;150 is to hopefuly account for the time it takes for the rotator to decelerate/make corrections
+    } else { ;1500 is to hopefuly account for the time it takes for the rotator to decelerate/make corrections
         return 1500 * (Sqrt(theta / 5.0))
     }
 }
@@ -97,14 +97,14 @@ For i, fileName in files {
     h := Mod(305 + anglesHalf[i], 360)  
 
    
-    WinActivate, Kinesis,, Thorlabs Sqsingle Photon Counter GUI
+    WinActivate, Kinesis,, Thorlabs Single Photon Counter GUI
     ;WinWaitActive here somehow prevents Kinesis from being Active so just leave it out
 
     Click, 947, 149 ;Move
-    Sleep, 1200 ;make sure program has time to catch up
+    Sleep, 1100 ;make sure program has time to catch up
     Send, %q%{Enter} ; input angle for the rotator with the quarter waveplate
     Click, 336, 146
-    Sleep, 1200
+    Sleep, 1100
     Send, %h%{Enter}
     
     sleepVal := SleepCalculator(q, qPrev, h, hPrev) ;Sleeps long enough to allow both motors reach their intended positions
@@ -117,7 +117,7 @@ For i, fileName in files {
     WinWaitActive, Thorlabs Single Photon Counter GUI,, Kinesis
     
     Click, 134, 356 ;Start collecting data
-    Sleep 12000
+    Sleep 10000
     Click, 134, 356 ;Stop collecting data
     Click, 14, 32 ;File
     Click, 30, 82 ;Sava data

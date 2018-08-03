@@ -52,15 +52,15 @@ half = lambda hwp: waveplateUnitary(hwp, math.pi)
 #Takes the angle on a qwp and hwp (degrees in real angle) applied in that order
 #Returns the Bloch vector of the state 
 def measuredStokesVector(qwp, hwp):
-    qJones = quarter(qwp).getH()
-    hJones = half(hwp)
+    qJones = jonesQuarter(qwp).getH()
+    hJones = jonesHalf(hwp)
     return stateVectorToStokesVector(qJones * (hJones * h))
 
 #Takes the angle on a hwp and qwp (degrees in real angle) applied in that order
 #Returns the unitary of transformation 
 def constructedStokesVector(hwp, qwp):
-    qJones = quarter(qwp)
-    hJones = half(hwp)
+    qJones = jonesQuarter(qwp)
+    hJones = jonesHalf(hwp)
     return stateVectorToStokesVector(qJones * (hJones * h))
 
 #Takes a vector the stokes parameter of state
@@ -74,13 +74,13 @@ def stokesVectorToPolar(stokesVector):
 #Returns the angles to input on a hwp and qwp (in that order) to get state phi
 def waveplatesToConstructPsi(stokesVector):
     theta, phi = stokesVectorToPolar(stokesVector)
-    return math.degrees((phi - math.pi/2 + theta))/4, math.degrees(phi)/2
+    return math.degrees((phi - math.pi/2 + theta))/4, math.degrees(math.pi + phi)/2
 
 #Given theta and phi (radians) on our R/L sphere that specify a state psi
 #Returns the angles to input on a qwp and hwp (in that order) to measure in the psi basis
 def waveplatesToMeasurePsi(stokesVector):
     theta, phi = stokesVectorToPolar(stokesVector)
-    return math.degrees(math.pi-phi)/2, math.degrees((phi - math.pi/2 + theta))/4
+    return math.degrees(phi)/2, math.degrees((phi - math.pi/2 + theta))/4
 
 #takes a 2x1 state vector and returns the 1x3 list of stokes parameters [X,Y,Z]
 def stateVectorToStokesVector(stateVector):
@@ -91,29 +91,20 @@ def stateCalc(theta, phi):
 	return np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
 
 def jonesQuarter(theta):
-    theta = math.radians(2 * theta)
+    theta = math.radians(theta)
     q = np.matrix([[complex((np.cos(theta))**2, (np.sin(theta))**2), complex(1, -1)*(np.sin(theta))*(np.cos(theta))],
     [complex(1, -1)*(np.sin(theta))*(np.cos(theta)), complex((np.sin(theta))**2, (np.cos(theta))**2)]])
+    print(q)
     return q
 
 def jonesHalf(theta):
-    theta = math.radians(2 * theta)
+    theta = math.radians(theta)
     h = np.matrix([[np.cos(2*theta), np.sin(2*theta)], [np.sin(2*theta), -np.cos(2*theta)]])
     return h
 
-#print("H", np.round(jonesQuarter(0) * h, 4))
-#print("R", np.round(jonesQuarter(45) * h, 4))
-#print("H", np.round(jonesQuarter(90) * h, 4))
-#print("L", np.round(jonesQuarter(-45) * h, 4))
-
-#print("H", np.round(jonesHalf(0) * h, 4))
-#print("D", np.round(jonesHalf(22.5) * h, 4))
-#print("A", np.round(jonesHalf(-22.5) * h, 4))
-#print("V", np.round(jonesHalf(45) * h, 4))
-#p rint("V", np.round(jonesHalf(-45) * h, 4))
 
 sicpovms = [[0, 1, 0]]
-for i in range(0,3):
+for i in range(0,3):#
 	sicpovms.append(stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
 for i in range(0, len(sicpovms)):
    print("Psi", i, " ", waveplatesToMeasurePsi(sicpovms[i]))

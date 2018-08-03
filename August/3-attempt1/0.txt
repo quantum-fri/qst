@@ -1,0 +1,113 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-03
+Time (HH:MM:SS):	08:42:41
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          365 	
+        2	          356 	
+        3	          368 	
+        4	          362 	
+        5	          335 	
+        6	          342 	
+        7	          336 	
+        8	          353 	
+        9	          382 	
+       10	          355 	
+       11	          361 	
+       12	          354 	
+       13	          375 	
+       14	          332 	
+       15	          330 	
+       16	          349 	
+       17	          345 	
+       18	          373 	
+       19	          347 	
+       20	          351 	
+       21	          355 	
+       22	          364 	
+       23	          369 	
+       24	          383 	
+       25	          319 	
+       26	          367 	
+       27	          379 	
+       28	          378 	
+       29	          371 	
+       30	          382 	
+       31	          379 	
+       32	          348 	
+       33	          366 	
+       34	          333 	
+       35	          340 	
+       36	          322 	
+       37	          355 	
+       38	          369 	
+       39	          358 	
+       40	          356 	
+       41	          379 	
+       42	          338 	
+       43	          305 	
+       44	          346 	
+       45	          361 	
+       46	          366 	
+       47	          356 	
+       48	          350 	
+       49	          328 	
+       50	          321 	
+       51	          343 	
+       52	          364 	
+       53	          368 	
+       54	          333 	
+       55	          348 	
+       56	          353 	
+       57	          353 	
+       58	          360 	
+       59	          336 	
+       60	          388 	
+       61	          336 	
+       62	          350 	
+       63	          347 	
+       64	          344 	
+       65	          357 	
+       66	          343 	
+       67	          349 	
+       68	          340 	
+       69	          353 	
+       70	          354 	
+       71	          368 	
+       72	          340 	
+       73	          365 	
+       74	          326 	
+       75	          322 	
+       76	          382 	
+       77	          375 	
+       78	          362 	
+       79	          303 	
+       80	          345 	
+       81	          354 	
+       82	          337 	
+       83	          377 	
+       84	          360 	
+       85	          383 	
+       86	          353 	
+       87	          368 	
+       88	          359 	
+       89	          347 	
+       90	          366 	

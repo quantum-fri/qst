@@ -1,0 +1,113 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-03
+Time (HH:MM:SS):	08:42:59
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          880 	
+        2	          922 	
+        3	          896 	
+        4	          832 	
+        5	          921 	
+        6	          881 	
+        7	          935 	
+        8	          880 	
+        9	          914 	
+       10	          873 	
+       11	          905 	
+       12	          868 	
+       13	          890 	
+       14	          881 	
+       15	          888 	
+       16	          825 	
+       17	          847 	
+       18	          873 	
+       19	          897 	
+       20	          920 	
+       21	          824 	
+       22	          873 	
+       23	          879 	
+       24	          868 	
+       25	          846 	
+       26	          886 	
+       27	          863 	
+       28	          918 	
+       29	          879 	
+       30	          884 	
+       31	          935 	
+       32	          848 	
+       33	          853 	
+       34	          889 	
+       35	          888 	
+       36	          859 	
+       37	          883 	
+       38	          903 	
+       39	          928 	
+       40	          860 	
+       41	          901 	
+       42	          889 	
+       43	          869 	
+       44	          900 	
+       45	          930 	
+       46	          818 	
+       47	          923 	
+       48	          891 	
+       49	          865 	
+       50	          897 	
+       51	          896 	
+       52	          903 	
+       53	          937 	
+       54	          902 	
+       55	          974 	
+       56	          845 	
+       57	          894 	
+       58	          839 	
+       59	          857 	
+       60	          852 	
+       61	          867 	
+       62	          874 	
+       63	          847 	
+       64	          882 	
+       65	          832 	
+       66	          838 	
+       67	          833 	
+       68	          860 	
+       69	          828 	
+       70	          917 	
+       71	          906 	
+       72	          848 	
+       73	          881 	
+       74	          834 	
+       75	          889 	
+       76	          859 	
+       77	          888 	
+       78	          863 	
+       79	          817 	
+       80	          859 	
+       81	          862 	
+       82	          888 	
+       83	          903 	
+       84	          939 	
+       85	          910 	
+       86	          825 	
+       87	          830 	
+       88	          851 	
+       89	          878 	
+       90	          857 	

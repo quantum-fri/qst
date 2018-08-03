@@ -18,7 +18,9 @@ dcStd = math.sqrt(8.029)
 
 #Calculates the quantum state vector coresponding to polar coordinates on the bloch sphere
 def stateCalc(theta, phi):
-	return np.cos(theta/2) * ang.r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * ang.l
+    theta = math.radians(theta)
+    phi = math.radians(phi)
+    return np.cos(theta/2) * ang.r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * ang.l
 
 #Constructs a random tetrahedron with all four vertices on the surface of the Bloch sphere
 tetrahedronVerticesIdeal = []
@@ -41,7 +43,7 @@ tetrahedronVerticesIdeal = []
 
 tetrahedronVerticesIdeal = [[0, 1, 0]]
 for i in range(0,3):
-	tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
+	tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(109.5, i*120)))
 print(tetrahedronVerticesIdeal)
 #Adjusts ideal states to those we can actually measure
 #Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
