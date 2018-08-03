@@ -22,24 +22,29 @@ fileList = ["d.txt", "a.txt", "r.txt", "l.txt", "h.txt", "v.txt"]
 
 resultList = []
 for fileNr in fileList:
+
     fileName = os.path.join(sys.argv[1], fileNr)
     #Waits for each file to come in
     while not os.path.exists(fileName):
         time.sleep(5) 
     print("file read ----------------------------")
     resultList.append(funcs.getMeanVar(fileName))
+
 print("about to calculate ----------------------")
 EtaDC = funcs.getEtas(dcStd, 1008)
+stokesVector = []
+stokesError = []
 for firstValInPair in range(0, len(resultList), 2):
-    stokesVector = []
-    stokesError = []
     firstVal = resultList[firstValInPair]
     firstValEta = funcs.getEtas(firstVal[2], firstVal[1])
     secondVal = resultList[firstValInPair + 1]
     secondValEta = funcs.getEtas(secondVal[2], secondVal[1])
-    res = funcs.ei([firstValEta, secondValEta, EtaDC], funcs.getZ, [firstVal[0], secondVal[0], dcMean])
+    res = funcs.ei([firstVal[0], secondVal[0], dcMean], funcs.getZ, [firstValEta, secondValEta, EtaDC])
     stokesVector.append(2*res[0] - 1)
     stokesError.append(res[1])
 print("about to show ----------------------------")
+print("stokes vector", stokesVector)
+print("stokes error", stokesError)
+print("fidelity", funcs.fidelity(stokesVector, np.array([[0], [1]])))
 Bloch.stokesToVector(stokesVector)
 Bloch.show()

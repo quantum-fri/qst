@@ -22,29 +22,17 @@ def stateCalc(theta, phi):
     phi = math.radians(phi)
     return np.cos(theta/2) * ang.r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * ang.l
 
-#Constructs a random tetrahedron with all four vertices on the surface of the Bloch sphere
-tetrahedronVerticesIdeal = []
-#isFlat = True
-
-#while isFlat:
-#    isFlat = False
-#    #Loop makes four random points on the surface of the Bloch sphere by generating 4 pairs of random polar coords)
-#    for i in range(0, 4):
-#        theta = rand.uniform(0, math.pi)
-#        phi = rand.uniform(0, 2 * math.pi)
-#        tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(theta, phi)))
-#    #Insert 1 at the beginning of each row to make it 4x4 (necessary for rank check for nonflat tetrahedron)
-#    for row in tetrahedronVerticesIdeal:
-#        row.insert(0, 1)
-#    #Checks if the four points form a tetrahedron with positive volume
-#    if linalg.matrix_rank(tetrahedronVerticesIdeal) != 4:
-#        tetrahedronVerticesIdeal = []
-#        isFlat = True
-
-tetrahedronVerticesIdeal = [[0, 1, 0]]
+##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
+tetrahedronVerticesStates = [stateCalc(0, 0)]
 for i in range(0,3):
-	tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(stateCalc(109.5, i*120)))
-print(tetrahedronVerticesIdeal)
+	tetrahedronVerticesStates.append(stateCalc(109.5, i*120))
+#Make a random transformation to apply to each point of the tetrahedron to rotate the whole tetrahedron
+qwp = ang.jonesQuarter(rand.uniform(0, 360))
+hwp = ang.jonesHalf(rand.uniform(0, 360))
+tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector((qwp * (hwp * np.matrix(state))))for state in tetrahedronVerticesStates]
+
+
+
 #Adjusts ideal states to those we can actually measure
 #Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
 ##tetrahedronVerticesIdeal = [row[1:] for row in tetrahedronVerticesIdeal]
@@ -96,8 +84,9 @@ unknownErrorVector = []
 unknownStateVector= []
 means = np.array([entry[0] for entry in resultList])
 Etas = np.array([funcs.getEtas(entry[2], entry[1]) for entry in resultList])
-unVectElCalc = lambda count, darkCount: unknownVectorElementCalc(count, darkCount, tetrahedronVerticesReal[i])
-for i in range(0, len(resultList)):  
+
+for i in range(0, len(resultList)): 
+    unVectElCalc = lambda count, darkCount: unknownVectorElementCalc(count, darkCount, tetrahedronVerticesReal[i]) 
     res = funcs.ei([means, dcMean], unVectElCalc, [Etas, etaDc])
     unknownStateVector.append(res[0])
     unknownErrorVector.append(res[1])
@@ -121,5 +110,5 @@ for i in range(0, len(unknownStateVector)):
 stokesVector = stokesVector [1:]
 stokesError = stokesError[1:]
 print("Final check point", stokesVector)
-Bloch.stokesToVector(stokesVector)
+#Bloch.stokesToVector(stokesVector)
 Bloch.show()

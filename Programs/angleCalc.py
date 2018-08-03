@@ -94,7 +94,7 @@ def jonesQuarter(theta):
     theta = math.radians(theta)
     q = np.matrix([[complex((np.cos(theta))**2, (np.sin(theta))**2), complex(1, -1)*(np.sin(theta))*(np.cos(theta))],
     [complex(1, -1)*(np.sin(theta))*(np.cos(theta)), complex((np.sin(theta))**2, (np.cos(theta))**2)]])
-    print(q)
+    #print(q)
     return q
 
 def jonesHalf(theta):
@@ -103,11 +103,11 @@ def jonesHalf(theta):
     return h
 
 
-sicpovms = [[0, 1, 0]]
-for i in range(0,3):#
-	sicpovms.append(stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
-for i in range(0, len(sicpovms)):
-   print("Psi", i, " ", waveplatesToMeasurePsi(sicpovms[i]))
+#sicpovms = [[0, 1, 0]]
+#for i in range(0,3):
+#	sicpovms.append(stateVectorToStokesVector(stateCalc(math.radians(109.5), math.radians(i*120))))
+#for i in range(0, len(sicpovms)):
+#   print("Psi", i, " ", waveplatesToMeasurePsi(sicpovms[i]))
 
 #print(waveplatesToMeasurePsi(stateVectorToStokesVector(r)))
 #print(waveplatesToMeasurePsi(stateVectorToStokesVector(l)))
