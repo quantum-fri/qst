@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments\\Programs")
+sys.path.append("C:\\Users\\quantum\\Desktop\\QST experiments\\Programs\\")
 import Jun26QstFunctions
 
 theta = 30
