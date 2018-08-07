@@ -53,11 +53,11 @@ Send, python Tomography.py "%thePath%"{Enter}
 
 
 SleepCalculator(q, qPrev, h, hPrev) {
-    theta := Max(Mod(q - qPrev, 180), Mod(h - hPrev, 180)) ; determines the largest angle of rotation for either of the rotators
+    theta := Max(Mod(Abs(q - qPrev), 180), Mod(Abs(h - hPrev), 180)) ; determines the largest angle of rotation for either of the rotators
     if (theta > 20) { ;Handles acceleration and max velocity
-        return 1500 * ((theta - 20)/20.0 + 2) + 7000
+        return 1500 * ((theta - 20)/20.0 + 2) + 5000
     } else { ;150 is to hopefuly account for the time it takes for the rotator to decelerate/make corrections
-        return 1500 * (Sqrt(theta / 5.0)) + 7000
+        return 1500 * (Sqrt(theta / 5.0)) + 5000
     }
 }
 
@@ -110,7 +110,7 @@ For i, fileName in files {
     sleepVal := SleepCalculator(q, qPrev, h, hPrev) ;Sleeps long enough to allow both motors reach their intended positions
     qPrev := q ;set up for next loop
     hPrev := h
-    Sleep, sleepVal
+    Sleep, %sleepVal%
 
 
     WinActivate, Thorlabs Single Photon Counter GUI,, Kinesis ;Return to SPC interface to collect data
