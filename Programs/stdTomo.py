@@ -42,9 +42,12 @@ for firstValInPair in range(0, len(resultList), 2):
     res = funcs.ei([firstVal[0], secondVal[0], dcMean], funcs.getZ, [firstValEta, secondValEta, EtaDC])
     stokesVector.append(2*res[0] - 1)
     stokesError.append(res[1])
+
+stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
 print("about to show ----------------------------")
 print("stokes vector", stokesVector)
 print("stokes error", stokesError)
-print("fidelity", funcs.fidelity(stokesVector, np.array([[0], [1]])))
+print("fidelity", funcs.fidelity(stokesVector, np.array([0,1])))
+
 Bloch.stokesToVector(stokesVector)
 Bloch.show()

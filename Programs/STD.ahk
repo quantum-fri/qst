@@ -16,7 +16,7 @@ SetTitleMatchMode, 2
 ;Allow for customizable folder name to store data
 FormatTime, month,, MMMM
 FormatTime, day,, d
-InputBox, newFolder, Name Data Set, `Enter a valid folder name to store the data,,,, 726, 465,,, %day%-
+InputBox, newFolder, Name Data Set, `Enter a valid folder name to store the data,,,, 726, 465,,, %day%-STD-
 
 ;Create the file
 FileCreateDir, C:\Users\quantum\Desktop\QST experiments\%month%\%newFolder%
@@ -55,9 +55,9 @@ Send, python stdTomo.py "%thePath%"{Enter}
 SleepCalculator(q, qPrev, h, hPrev) {
     theta := Max(Mod(q - qPrev, 180), Mod(h - hPrev, 180)) ; determines the largest angle of rotation for either of the rotators
     if (theta > 20) { ;Handles acceleration and max velocity
-        return 1500 * ((theta - 20)/20.0 + 2) + 10000
+        return 1500 * ((theta - 20)/20.0 + 2) + 5000
     } else { ;1500 is to hopefuly account for the time it takes for the rotator to decelerate/make corrections
-        return 1500 * (Sqrt(theta / 5.0)) + 10000
+        return 1500 * (Sqrt(theta / 5.0)) + 5000
     }
 }
 
@@ -93,7 +93,7 @@ hPrev := 0
 
 For i, fileName in files {
 
-    q := Mod(334 - anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
+    q := Mod(336 - anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
     h := Mod(305 - anglesHalf[i], 360)  
 
    
@@ -117,7 +117,7 @@ For i, fileName in files {
     WinWaitActive, Thorlabs Single Photon Counter GUI,, Kinesis
     
     Click, 134, 356 ;Start collecting data
-    Sleep 21000
+    Sleep 16000
     Click, 134, 356 ;Stop collecting data
     Click, 14, 32 ;File
     Click, 30, 82 ;Sava data

@@ -66,7 +66,7 @@ def constructedStokesVector(hwp, qwp):
 #Takes a vector the stokes parameter of state
 #Returns the angles for the polar form of the same state
 def stokesVectorToPolar(stokesVector):
-    theta = np.arccos(stokesVector[1])
+    theta = math.acos(stokesVector[1])
     phi = np.arctan2(stokesVector[0], stokesVector[2])
     return theta, phi
 

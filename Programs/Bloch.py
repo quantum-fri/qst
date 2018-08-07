@@ -88,7 +88,7 @@ def annotate3D(ax, s, *args, **kwargs):
     ax.add_artist(tag)
 
 def stokesToVector(sVector):
-    print("The sVector is: ", sVector)
+    #print("The sVector is: ", sVector)
     vector = V*(-sVector[2]) + A*(-sVector[0]) + R*sVector[1]
     a = Arrow3D(*vector, mutation_scale=20,
             lw=1, arrowstyle="->", color="r")
