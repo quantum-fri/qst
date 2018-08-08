@@ -58,5 +58,5 @@ with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write(str(stokesError) + "\n")
     result.write(str(fid) + "\n")
     result.write(str(fidErr) + "\n")
-Bloch.stokesToVector(stokesVector)
+Bloch.stokesToVector(stokesVector, "r")
 Bloch.show()

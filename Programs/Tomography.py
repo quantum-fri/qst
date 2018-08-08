@@ -110,7 +110,7 @@ for i in range(0, len(unknownStateVector)):
 stokesVector = stokesVector [1:]
 stokesError = stokesError[1:]
 stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
-expected = np.array(funcs.qPlateStateCalc(20))
+expected = np.array(funcs.qPlateStateCalc(180))
 f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
 fid, fidErr = funcs.ei(stokesVector, f, stokesError)
 print("Stokes Vector", stokesVector)
@@ -119,10 +119,10 @@ print("fidelity", fid, "+-", fidErr)
 with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write("## SIC POVM ##\n")
     result.write("## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity ##\n")
-    result.write(str(expected) + "\n")
+    result.write(str(np.round(expected[0], 6)) + ',' + str(np.round(expected[1], 6)) + '\n')
     result.write(str(stokesVector) + "\n")
     result.write(str(stokesError) + "\n")
     result.write(str(fid) + "\n")
     result.write(str(fidErr) + "\n")
-#Bloch.stokesToVector(stokesVector)
+#Bloch.stokesToVector(stokesVector, "r")
 #Bloch.show()

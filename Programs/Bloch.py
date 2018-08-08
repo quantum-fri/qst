@@ -5,6 +5,7 @@ from itertools import product, combinations
 from mpl_toolkits.mplot3d.proj3d import proj_transform
 from matplotlib.text import Annotation
 import math
+import angleCalc as ang
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
@@ -34,7 +35,7 @@ u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:20j]
 x = np.cos(u)*np.sin(v)
 y = np.sin(u)*np.sin(v)
 z = np.cos(v)
-ax.plot_wireframe(x, y, z, color="#2a68a2", alpha=0.5)
+ax.plot_wireframe(x, y, z, color="#2a68a2", alpha=0.25)
 
 # draw a point
 ax.scatter([0], [0], [0], color="g", s=100)
@@ -87,11 +88,20 @@ def annotate3D(ax, s, *args, **kwargs):
     tag = Annotation3D(s, *args, **kwargs)
     ax.add_artist(tag)
 
-def stokesToVector(sVector):
+def stokesToVector(sVector,inColor):
     #print("The sVector is: ", sVector)
     vector = V*(-sVector[2]) + A*(-sVector[0]) + R*sVector[1]
     a = Arrow3D(*vector, mutation_scale=20,
-            lw=1, arrowstyle="->", color="r")
+            lw=1, arrowstyle="->", color=inColor)
+    ax.add_artist(a)
+
+def diffVector(idealVector, measuredVector, inColor):
+    firstVector = V*(-idealVector[2]) + A*(-idealVector[0]) + R*idealVector[1]
+    firstVectorFlipped = np.matrix(firstVector) * ang.X
+    secondVector = V*(-measuredVector[2]) + A*(-measuredVector[0]) + R*measuredVector[1]
+    finalVector = secondVector + np.array(firstVectorFlipped)
+    a = Arrow3D(*finalVector, mutation_scale=20,
+            lw=1, arrowstyle="->", color=inColor)
     ax.add_artist(a)
 
 #H/V labels
