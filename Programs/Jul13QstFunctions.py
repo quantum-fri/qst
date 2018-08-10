@@ -131,10 +131,10 @@ def getAngle(pMatrix):
 def qPlateStateCalc(theta):
 	theta = math.radians(theta)
 	twoTheta = 2*theta
-	r = np.array([1/math.sqrt(2), complex(0,1/math.sqrt(2))])
-	l = np.array([1/math.sqrt(2), complex(0,(-1)*1/math.sqrt(2))])
+	r = np.matrix([[1/math.sqrt(2)], [complex(0,1/math.sqrt(2))]])
+	l = np.matrix([[1/math.sqrt(2)], [complex(0,(-1)*1/math.sqrt(2))]])
 	psi = np.cos(math.pi/4 - theta)*r + (complex(np.cos(twoTheta), np.sin(twoTheta)))*np.sin(math.pi/4 - theta) * l
-	return [psi[0], psi[1]]
+	return psi
 
 def getEtas(std, size):
 	return 1.96*std/(size**(0.5))

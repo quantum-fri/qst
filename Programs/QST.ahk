@@ -49,7 +49,7 @@ IfWinExist, Kinesis
 ;The tomography program that generates the random povm (a tetrahedron) and eventually runs the tomography calculation
 ;Run, C:\ProgramData\Anaconda3\python.exe Tomography.py %thePath%, C:\Users\quantum\Desktop\QST experiments\Programs
 WinActivate Anaconda Prompt
-Send, python Tomography.py "%thePath%"{Enter}
+Send, python Tomography.py "%thePath%" 0{Enter}
 
 
 SleepCalculator(q, qPrev, h, hPrev) {

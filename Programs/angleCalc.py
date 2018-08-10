@@ -88,7 +88,9 @@ def stateVectorToStokesVector(stateVector):
 
 #Calculates the quantum state vector coresponding to polar coordinates on the bloch sphere
 def stateCalc(theta, phi):
-	return np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
+    theta = math.radians(theta)
+    phi = math.radians(phi)
+    return np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
 
 def jonesQuarter(theta):
     theta = math.radians(theta)
