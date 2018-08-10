@@ -1,0 +1,123 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-03
+Time (HH:MM:SS):	09:48:43
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	           11 	
+        2	           16 	
+        3	            3 	
+        4	            8 	
+        5	           15 	
+        6	            9 	
+        7	           11 	
+        8	           27 	
+        9	           38 	
+       10	           27 	
+       11	           50 	
+       12	           47 	
+       13	           73 	
+       14	           70 	
+       15	          120 	
+       16	          141 	
+       17	          185 	
+       18	          203 	
+       19	          286 	
+       20	          293 	
+       21	          367 	
+       22	          409 	
+       23	          427 	
+       24	          401 	
+       25	          473 	
+       26	          475 	
+       27	          467 	
+       28	          499 	
+       29	          535 	
+       30	          501 	
+       31	          582 	
+       32	          535 	
+       33	          498 	
+       34	          527 	
+       35	          559 	
+       36	          544 	
+       37	          488 	
+       38	          556 	
+       39	          551 	
+       40	          472 	
+       41	          500 	
+       42	          598 	
+       43	          524 	
+       44	          538 	
+       45	          583 	
+       46	          502 	
+       47	          582 	
+       48	          540 	
+       49	          532 	
+       50	          563 	
+       51	          524 	
+       52	          533 	
+       53	          516 	
+       54	          506 	
+       55	          480 	
+       56	          526 	
+       57	          498 	
+       58	          521 	
+       59	          527 	
+       60	          485 	
+       61	          524 	
+       62	          517 	
+       63	          529 	
+       64	          506 	
+       65	          512 	
+       66	          553 	
+       67	          501 	
+       68	          547 	
+       69	          537 	
+       70	          568 	
+       71	          520 	
+       72	          558 	
+       73	          580 	
+       74	          547 	
+       75	          562 	
+       76	          599 	
+       77	          576 	
+       78	          561 	
+       79	          531 	
+       80	          543 	
+       81	          579 	
+       82	          577 	
+       83	          549 	
+       84	          539 	
+       85	          526 	
+       86	          553 	
+       87	          519 	
+       88	          564 	
+       89	          578 	
+       90	          615 	
+       91	          582 	
+       92	          582 	
+       93	          533 	
+       94	          583 	
+       95	          563 	
+       96	          584 	
+       97	          552 	
+       98	          574 	
+       99	          588 	
+      100	          548 	

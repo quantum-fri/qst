@@ -1,0 +1,7 @@
+## SIC POVM ##
+## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity ##
+(1+0j),0j
+[0.42927167506817066, -0.23584044175669289, 0.60265884094944777]
+[0.012389369937207961, -0.0060118806797584967, 0.0078957365176319794]
+0.801329420475
+0.00394786825882

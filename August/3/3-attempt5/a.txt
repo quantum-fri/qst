@@ -1,0 +1,122 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-03
+Time (HH:MM:SS):	09:31:48
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	          118 	
+        2	          138 	
+        3	          122 	
+        4	          126 	
+        5	          169 	
+        6	          146 	
+        7	          143 	
+        8	          152 	
+        9	          177 	
+       10	          198 	
+       11	          219 	
+       12	          208 	
+       13	          216 	
+       14	          235 	
+       15	          313 	
+       16	          310 	
+       17	          308 	
+       18	          325 	
+       19	          337 	
+       20	          334 	
+       21	          362 	
+       22	          426 	
+       23	          397 	
+       24	          450 	
+       25	          391 	
+       26	          416 	
+       27	          412 	
+       28	          412 	
+       29	          425 	
+       30	          439 	
+       31	          439 	
+       32	          466 	
+       33	          448 	
+       34	          467 	
+       35	          440 	
+       36	          440 	
+       37	          462 	
+       38	          433 	
+       39	          444 	
+       40	          423 	
+       41	          452 	
+       42	          443 	
+       43	          458 	
+       44	          472 	
+       45	          456 	
+       46	          460 	
+       47	          468 	
+       48	          405 	
+       49	          448 	
+       50	          441 	
+       51	          456 	
+       52	          448 	
+       53	          416 	
+       54	          479 	
+       55	          430 	
+       56	          473 	
+       57	          428 	
+       58	          470 	
+       59	          470 	
+       60	          417 	
+       61	          470 	
+       62	          453 	
+       63	          424 	
+       64	          419 	
+       65	          422 	
+       66	          449 	
+       67	          440 	
+       68	          442 	
+       69	          403 	
+       70	          463 	
+       71	          434 	
+       72	          465 	
+       73	          452 	
+       74	          424 	
+       75	          453 	
+       76	          428 	
+       77	          488 	
+       78	          442 	
+       79	          470 	
+       80	          454 	
+       81	          401 	
+       82	          445 	
+       83	          411 	
+       84	          456 	
+       85	          437 	
+       86	          449 	
+       87	          465 	
+       88	          473 	
+       89	          417 	
+       90	          429 	
+       91	          449 	
+       92	          422 	
+       93	          455 	
+       94	          420 	
+       95	          457 	
+       96	          432 	
+       97	          432 	
+       98	          478 	
+       99	          459 	

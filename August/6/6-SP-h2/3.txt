@@ -1,0 +1,132 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-06
+Time (HH:MM:SS):	15:42:02
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	Yes
+
+Bin Number 	Counts per Bin 	Remarks
+        1	         1251 	
+        2	         1231 	
+        3	         1338 	
+        4	         1258 	
+        5	         1267 	
+        6	         1228 	
+        7	         1238 	
+        8	         1215 	
+        9	         1212 	
+       10	         1279 	
+       11	         1256 	
+       12	         1239 	
+       13	         1217 	
+       14	         1260 	
+       15	         1260 	
+       16	         1199 	
+       17	         1238 	
+       18	         1254 	
+       19	         1234 	
+       20	         1372 	
+       21	         1184 	
+       22	         1324 	
+       23	         1218 	
+       24	         1321 	
+       25	         1293 	
+       26	         1195 	
+       27	         1244 	
+       28	         1221 	
+       29	         1229 	
+       30	         1338 	
+       31	         1282 	
+       32	         1333 	
+       33	         1231 	
+       34	         1291 	
+       35	         1216 	
+       36	         1221 	
+       37	         1306 	
+       38	         1260 	
+       39	         1254 	
+       40	         1312 	
+       41	         1267 	
+       42	         1311 	
+       43	         1293 	
+       44	         1328 	
+       45	         1207 	
+       46	         1291 	
+       47	         1281 	
+       48	         1272 	
+       49	         1305 	
+       50	         1199 	
+       51	         1197 	
+       52	         1266 	
+       53	         1259 	
+       54	         1277 	
+       55	         1272 	
+       56	         1249 	
+       57	         1330 	
+       58	         1293 	
+       59	         1308 	
+       60	         1227 	
+       61	         1249 	
+       62	         1252 	
+       63	         1254 	
+       64	         1249 	
+       65	         1266 	
+       66	         1287 	
+       67	         1216 	
+       68	         1247 	
+       69	         1296 	
+       70	         1225 	
+       71	         1306 	
+       72	         1253 	
+       73	         1237 	
+       74	         1241 	
+       75	         1206 	
+       76	         1276 	
+       77	         1237 	
+       78	         1237 	
+       79	         1251 	
+       80	         1204 	
+       81	         1286 	
+       82	         1241 	
+       83	         1286 	
+       84	         1207 	
+       85	         1246 	
+       86	         1221 	
+       87	         1277 	
+       88	         1294 	
+       89	         1308 	
+       90	         1289 	
+       91	         1239 	
+       92	         1249 	
+       93	         1254 	
+       94	         1258 	
+       95	         1295 	
+       96	         1286 	
+       97	         1239 	
+       98	         1290 	
+       99	         1281 	
+      100	         1288 	
+      101	         1259 	
+      102	         1166 	
+      103	         1301 	
+      104	         1276 	
+      105	         1300 	
+      106	         1268 	
+      107	         1277 	
+      108	         1305 	
+      109	         1271 	

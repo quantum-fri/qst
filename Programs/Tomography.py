@@ -123,7 +123,7 @@ stokesError = stokesError[1:]
 stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
 ###Mixed state fid calculation
 laser = [-0.5725387770565411, -0.79288381938069186, -0.20864946137214577]
-otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(100))
+otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(180))
 expected = 0.5 * funcs.densityMatrix(laser) + 0.5 * funcs.densityMatrix(otherSource)
 f = lambda x,y,z: funcs.fidFromDMats(funcs.densityMatrix([x,y,z]), expected)
 
@@ -131,13 +131,14 @@ f = lambda x,y,z: funcs.fidFromDMats(funcs.densityMatrix([x,y,z]), expected)
 #expected = np.array(funcs.qPlateStateCalc(0))
 #f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
 fid, fidErr = funcs.ei(stokesVector, f, stokesError)
+expected = funcs.getStokesParams(expected)
 print("Stokes Vector", stokesVector)
 print("Stokes Error", stokesError)
 print("fidelity", fid, "+-", fidErr)
 with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write("## SIC POVM ##\n")
     result.write("## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity ##\n")
-    result.write(str(np.round(expected[0], 6)) + ',' + str(np.round(expected[1], 6)) + '\n')
+    result.write(str(np.round(expected, 6)) + '\n')
     result.write(str(stokesVector) + "\n")
     result.write(str(stokesError) + "\n")
     result.write(str(fid) + "\n")
