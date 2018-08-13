@@ -37,38 +37,32 @@ X = np.matrix([[0, 1], [1, 0]])
 Y = np.matrix([[0, -1j], [1j, 0]])
 Z = np.matrix([[1, 0], [0, -1]])
 
-#Given theta (degrees in real angle) on a qwp returns the corresponding unitary 
-def waveplateUnitary(axisTheta, waveplateTheta):
-    theta = math.radians(2 * axisTheta)
-    eitheta = complex(np.cos(theta), np.sin(theta))
-    vTheta = np.matrix([[1 + eitheta, -1j + 1j*eitheta], [1j - (1j*eitheta), 1 + eitheta]])
-    unot = np.matrix([[1, 0],[0, complex(np.cos(-waveplateTheta), np.sin(-waveplateTheta))]])
-    return 0.25 * (vTheta * (unot * vTheta.getH()))
+#Returns the unitary of transformation corresponding to a quarter waveplate with axis angle theta from horizontal
+def quarter(theta):
+    theta = math.radians(theta)
+    q = np.matrix([[complex((np.cos(theta))**2, (np.sin(theta))**2), complex(1, -1)*(np.sin(theta))*(np.cos(theta))],
+    [complex(1, -1)*(np.sin(theta))*(np.cos(theta)), complex((np.sin(theta))**2, (np.cos(theta))**2)]])
+    return q
 
-#lambdas for simplification
-quarter = lambda qwp: waveplateUnitary(qwp, math.pi/2)
-half = lambda hwp: waveplateUnitary(hwp, math.pi)
+#Returns the unitary of transformation corresponding to a half waveplate with axis angle theta from horizontal
+def half(theta):
+    theta = math.radians(theta)
+    h = np.matrix([[np.cos(2*theta), np.sin(2*theta)], [np.sin(2*theta), -np.cos(2*theta)]])
+    return h
 
 #Takes the angle on a qwp and hwp (degrees in real angle) applied in that order
 #Returns the Bloch vector of the state 
 def measuredStokesVector(qwp, hwp):
-    qJones = jonesQuarter(qwp).getH()
-    hJones = jonesHalf(hwp)
+    qJones = quarter(qwp).getH()
+    hJones = half(hwp)
     return stateVectorToStokesVector(qJones * (hJones * h))
 
 #Takes the angle on a hwp and qwp (degrees in real angle) applied in that order
 #Returns the unitary of transformation 
 def constructedStokesVector(hwp, qwp):
-    qJones = jonesQuarter(qwp)
-    hJones = jonesHalf(hwp)
+    qJones = quarter(qwp)
+    hJones = half(hwp)
     return stateVectorToStokesVector(qJones * (hJones * h))
-
-#Takes a vector the stokes parameter of state
-#Returns the angles for the polar form of the same state
-def stokesVectorToPolar(stokesVector):
-    theta = math.acos(stokesVector[1])
-    phi = np.arctan2(stokesVector[0], stokesVector[2])
-    return theta, phi
 
 #Given theta and phi on our R/L sphere that specify a state psi,
 #Returns the angles to input on a hwp and qwp (in that order) to get state phi
@@ -92,18 +86,16 @@ def stateCalc(theta, phi):
     phi = math.radians(phi)
     return np.cos(theta/2) * r + (complex(np.cos(phi), np.sin(phi))) * np.sin(theta/2) * l
 
-def jonesQuarter(theta):
-    theta = math.radians(theta)
-    q = np.matrix([[complex((np.cos(theta))**2, (np.sin(theta))**2), complex(1, -1)*(np.sin(theta))*(np.cos(theta))],
-    [complex(1, -1)*(np.sin(theta))*(np.cos(theta)), complex((np.sin(theta))**2, (np.cos(theta))**2)]])
-    #print(q)
-    return q
+#Takes a vector the stokes parameter of state
+#Returns the angles for the polar form of the same state
+def stokesVectorToPolar(stokesVector):
+    theta = stokesLength(stokesVector) * math.acos(stokesVector[1])
+    phi = np.arctan2(stokesVector[0], stokesVector[2])
+    return theta, phi
 
-def jonesHalf(theta):
-    theta = math.radians(theta)
-    h = np.matrix([[np.cos(2*theta), np.sin(2*theta)], [np.sin(2*theta), -np.cos(2*theta)]])
-    return h
-
+#Returns the length of the stokes vector
+def stokesLength(stokesVector):
+    return (stokesVector[0]**2 + stokesVector[1]**2 + stokesVector[2]**2)**0.5
 
 #sicpovms = [[0, 1, 0]]
 #for i in range(0,3):

@@ -18,10 +18,10 @@ dcMean =  7.282 #dc = dark counts. These constants come from measurements with l
 dcStd = math.sqrt(8.029)
 
 def rotateOnX(stokes, theta):
-    return [params[0], params[1] * np.cos(theta) - params[2] * np.sin(theta), params[2] * np.cos(theta) + params[1] * np.sin(theta)]
+    return [stokes[0], stokes[1] * np.cos(theta) - stokes[2] * np.sin(theta), stokes[2] * np.cos(theta) + stokes[1] * np.sin(theta)]
 
 def rotateOnY(stokes, theta):
-        return [params[0] * np.cos(theta) + params[2] * np.sin(theta), params[1], params[2] * np.cos(theta) - params[0] * np.sin(theta)]
+    return [stokes[0] * np.cos(theta) + stokes[2] * np.sin(theta), stokes[1], stokes[2] * np.cos(theta) - stokes[0] * np.sin(theta)]
 
 fancy = True
 if fancy:
@@ -132,27 +132,30 @@ for i in range(0, len(unknownStateVector)):
 stokesVector = stokesVector [1:]
 stokesError = stokesError[1:]
 stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
-###Mixed state fid calculation
-laser = [-0.5725387770565411, -0.79288381938069186, -0.20864946137214577]
-angle = int(sys.argv[1][-3:].strip('mq'))
-otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(angle))
-expected = 0.5 * funcs.densityMatrix(laser) + 0.5 * funcs.densityMatrix(otherSource)
-f = lambda x,y,z: funcs.fidFromDMats(funcs.densityMatrix([x,y,z]), expected)
-
-###Pure state fid calculation
-#expected = np.array(funcs.qPlateStateCalc(0))
-#f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
+mixed = False
+if mixed:
+    ###Mixed state fid calculation
+    laser = [-0.5725387770565411, -0.79288381938069186, -0.20864946137214577]
+    angle = int(sys.argv[1][-3:].strip('mq'))
+    otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(angle))
+    expected = 0.5 * funcs.densityMatrix(laser) + 0.5 * funcs.densityMatrix(otherSource)
+    f = lambda x,y,z: funcs.fidFromDMats(funcs.densityMatrix([x,y,z]), expected)
+    expected = np.real(funcs.getStokesParams(expected))
+else:
+    ###Pure state fid calculation
+    expected = np.array(funcs.qPlateStateCalc(0))
+    f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
 
 ###Printing results and writing to log file plus some adjustments to make parsing the log file easier
 fid, fidErr = funcs.ei(stokesVector, f, stokesError)
-expected = np.real(funcs.getStokesParams(expected))
+
 tetrahedronVerticesReal = [np.round(row[1:], 6) for row in tetrahedronVerticesReal]
 print("Stokes Vector", stokesVector)
 print("Stokes Error", stokesError)
 print("fidelity", fid, "+-", fidErr)
 with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write("## SIC POVM ##\n")
-    result.write("## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity ##\n")
+    result.write("## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity, stokes of each vertex of the tetrahedron ##\n")
     result.write(str(np.round(expected, 6)) + '\n')
     result.write(str(stokesVector) + "\n")
     result.write(str(stokesError) + "\n")
@@ -162,8 +165,10 @@ with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write(str(tetrahedronVerticesReal[1]) + "\n")
     result.write(str(tetrahedronVerticesReal[2]) + "\n")
     result.write(str(tetrahedronVerticesReal[3]) + "\n")
-Bloch.stokesToVector(stokesVector, "r")
 
+
+###Graphing the results
+Bloch.stokesToVector(stokesVector, "r")
 for vert in tetrahedronVerticesReal:
     Bloch.stokesToVector(vert, 'g')
-#Bloch.show()
+Bloch.show()

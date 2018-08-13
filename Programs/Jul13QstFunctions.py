@@ -77,10 +77,10 @@ def getAvgMeanVar(fileName):
 
 #Returns the fidelity given the stokesParameters calculated from QST and the expected state
 def fidelity(stokesParams, expected):
-	expected =np.array(expected)
-	pMatrix = np.array(densityMatrix(stokesParams))
-	fid = np.dot(expected.conj(), np.dot(pMatrix, expected))
-	return np.real(fid)
+	expected = np.matrix(expected)
+	pMatrix = np.matrix(densityMatrix(stokesParams))
+	fid = expected.getH() * (pMatrix * expected)
+	return np.asscalar(fid)
 
 #Returns the fidelity calculated from two density matrices
 def fidFromDMats(dmat1, dmat2):
@@ -202,9 +202,7 @@ def getT(rho):
 	t1 = (rho[0,0] - t2**(2) - t3**(2))**(0.5)
 	return [t1, t2, t3, t4]
 
-#Returns the length of a bloch vector given a vector with the stokes Parameters
-def stokesLength(stokesParams):
-	return (stokesParams[0]**(2) + stokesParams[1]**(2) + stokesParams[2]**(2))**(0.5) 
+
 
 #Returns a list with x,y,z stokeParameters given a density Matrix as input
 def getStokesParams(rho):
