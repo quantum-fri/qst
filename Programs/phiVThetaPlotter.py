@@ -37,6 +37,7 @@ with open('measuredData.txt', 'r') as measured:
 plt.scatter(phisExpected, thetasExpected, s=lengthsExpected, c='b')
 plt.scatter(phisMeasured, thetasMeasured, s=lengthsMeasured, c= 'r')
 
+
 # Graph some reference points (known states)
 states = [ang.h, ang.v, ang.d, ang.a, ang.r, ang.l]
 stateStr = ["|H>","|V>","|D>","|A>","|R>","|L>"]
@@ -47,7 +48,7 @@ for i in range(0, len(states)):
 
 
 # Label graph
-plt.title("Expected vs Measured states of quarter waveplate + mixed family")
+plt.title("Expected vs Measured states of quarter waveplate family")
 plt.xlabel("phi of polar coordinates for points (degrees)")
 plt.ylabel("theta of polar coordinates for points (degrees)")
 plt.grid()
