@@ -23,39 +23,42 @@ def rotateOnX(stokes, theta):
 def rotateOnY(stokes, theta):
         return [params[0] * np.cos(theta) + params[2] * np.sin(theta), params[1], params[2] * np.cos(theta) - params[0] * np.sin(theta)]
 
-##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
-if not useOldTet:
+fancy = True
+if fancy:
+    ##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
+    if not useOldTet:
+        tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector(ang.stateCalc(0, 0))]
+        for i in range(0,3):
+            tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))
+
+        ###Make a random transformation to apply to each point of the tetrahedron to rotate the whole tetrahedron
+        rot1 = rand.uniform(0, 2*math.pi)
+        rot2 = rand.uniform(0, 2*math.pi)
+        tetrahedronVerticesIdeal = [rotateOnY(rotateOnX(stokesVector, rot1), rot2) for stokesVector in tetrahedronVerticesIdeal]
+        ###Adjusts ideal states to those we can actually measure
+        ###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
+        measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
+        ###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
+        measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
+        tetrahedronVerticesReal = [ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
+    else:
+        tetrahedronVerticesReal = []
+        with open(os.path.join(sys.argv[1], "result.txt"), "r") as oldAngs:
+            lines = [line.rstrip('\n') for line in oldAngs]
+            for aLine in lines[-4:]:
+                stripped = aLine.strip('[ ]').split()
+                tetrahedronVerticesReal.append([float(val) for val in stripped])
+else: 
     tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector(ang.stateCalc(0, 0))]
     for i in range(0,3):
         tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))
 
-    ###Make a random transformation to apply to each point of the tetrahedron to rotate the whole tetrahedron
-    rot1 = rand.uniform(0, 2*math.pi)
-    rot2 = rand.uniform(0, 2*math.pi)
-    tetrahedronVerticesIdeal = [rotateOnY(rotateOnX(stokesVector, rot1), rot2) for stokesVector in tetrahedronVerticesIdeal]
     ###Adjusts ideal states to those we can actually measure
     ###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
     measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
     ###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
     measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
     tetrahedronVerticesReal = [ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
-else:
-    tetrahedronVerticesReal= []
-    with open(os.path.join(sys.argv[1], "result.txt", "r") as oldAngs:
-        lines = [line.rstrip('\n') for line in oldAngs]
-        for aLine in lines[-4:]
-            tetrahedronVerticesReal.append([float(aLine)])
-        
-
-#tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector(ang.stateCalc(0, 0))]
-#for i in range(0,3):
-#    tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))
-
-###Adjusts ideal states to those we can actually measure
-###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
-#measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
-###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
-#measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
 
 
 if not useOldTet:
@@ -131,15 +134,19 @@ stokesError = stokesError[1:]
 stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
 ###Mixed state fid calculation
 laser = [-0.5725387770565411, -0.79288381938069186, -0.20864946137214577]
-otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(180))
+angle = int(sys.argv[1][-3:].strip('mq'))
+otherSource = ang.stateVectorToStokesVector(funcs.qPlateStateCalc(angle))
 expected = 0.5 * funcs.densityMatrix(laser) + 0.5 * funcs.densityMatrix(otherSource)
 f = lambda x,y,z: funcs.fidFromDMats(funcs.densityMatrix([x,y,z]), expected)
 
 ###Pure state fid calculation
 #expected = np.array(funcs.qPlateStateCalc(0))
 #f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
+
+###Printing results and writing to log file plus some adjustments to make parsing the log file easier
 fid, fidErr = funcs.ei(stokesVector, f, stokesError)
-expected = funcs.getStokesParams(expected)
+expected = np.real(funcs.getStokesParams(expected))
+tetrahedronVerticesReal = [np.round(row[1:], 6) for row in tetrahedronVerticesReal]
 print("Stokes Vector", stokesVector)
 print("Stokes Error", stokesError)
 print("fidelity", fid, "+-", fidErr)
@@ -156,6 +163,7 @@ with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write(str(tetrahedronVerticesReal[2]) + "\n")
     result.write(str(tetrahedronVerticesReal[3]) + "\n")
 Bloch.stokesToVector(stokesVector, "r")
+
 for vert in tetrahedronVerticesReal:
     Bloch.stokesToVector(vert, 'g')
-Bloch.show()
+#Bloch.show()

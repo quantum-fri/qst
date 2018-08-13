@@ -3,7 +3,7 @@ import angleCalc as ang
 import os, sys
 import numpy as np
 
-path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\quarterMixedFamily"
+#path = "/Users/charlie.goode/qst/August/quarterMixedFamily"
 os.chdir(path)
 files = os.scandir(path)
 
@@ -14,9 +14,9 @@ for oneFile in files:
             lines = [line.rstrip('\n') for line in myData]
             lines = lines [2:]
             #need to parse expected
-            expectedString = lines[0].strip('[ ]').split(',')
-            expectedStokesVector = [float(val) for val in expectedString]
-            measuredString = lines[1].strip('[ ]').split(',')
+            expectedString = lines[0].strip('[ ]').split()
+            expectedStokesVector = [float(val) for val in reformed]
+            measuredString = lines[1].strip('[ ]').split(', ')
             measuredStokesVector = [float(val) for val in measuredString]
             Bloch.stokesToVector(expectedStokesVector, 'b')
             Bloch.diffVector(expectedStokesVector, measuredStokesVector, 'r')
