@@ -5,7 +5,8 @@ import os, sys
 import numpy as np
 import math
 
-path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\quarterMixedFamily"
+#path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\quarterMixedFamily"
+path = '/Users/charlie.goode/qst/August/quarterMixedFamily'
 os.chdir(path)
 files = os.scandir(path)
 
