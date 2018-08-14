@@ -1,0 +1,135 @@
+Thorlabs Single Photon Counter Data Export
+
+Date (YYYY-MM-DD):	2018-08-14
+Time (HH:MM:SS):	13:09:48
+Device Name:	SPCM50A
+Serial Number:	M00451789
+GUI Revision:	1.0 Build 2
+Driver Revision:	1.0.1
+Firmware Revision:	1.0.0
+
+Application settings:
+Operating Mode:	Free Running Timed Counter
+Bin Length [ms]:	100
+Time between Bins [ms]:	10
+Pulse Blind Time [ns]:	0
+Trigger Edge:	non-applicable
+Array Measurement:	No
+Array Measurement Continuously:	non-applicable
+Bins per Array:	non-applicable
+Active APD Gating:	No
+Fan Off:	No
+
+Bin Number 	Counts per Bin 	Remarks
+        1	         1099 	
+        2	         1046 	
+        3	         1042 	
+        4	          993 	
+        5	         1010 	
+        6	         1033 	
+        7	         1079 	
+        8	          994 	
+        9	         1058 	
+       10	         1019 	
+       11	         1075 	
+       12	         1018 	
+       13	         1052 	
+       14	         1069 	
+       15	         1012 	
+       16	         1048 	
+       17	         1057 	
+       18	         1032 	
+       19	         1016 	
+       20	         1017 	
+       21	         1066 	
+       22	         1045 	
+       23	         1018 	
+       24	         1070 	
+       25	         1024 	
+       26	         1049 	
+       27	         1031 	
+       28	         1055 	
+       29	          961 	
+       30	         1009 	
+       31	         1049 	
+       32	         1117 	
+       33	         1039 	
+       34	         1019 	
+       35	         1037 	
+       36	         1022 	
+       37	         1061 	
+       38	         1063 	
+       39	         1027 	
+       40	         1028 	
+       41	         1001 	
+       42	         1064 	
+       43	         1019 	
+       44	         1043 	
+       45	         1032 	
+       46	          950 	
+       47	         1023 	
+       48	         1018 	
+       49	          985 	
+       50	         1023 	
+       51	          990 	
+       52	         1053 	
+       53	         1072 	
+       54	          984 	
+       55	         1001 	
+       56	          988 	
+       57	          969 	
+       58	          976 	
+       59	         1017 	
+       60	         1031 	
+       61	         1054 	
+       62	         1008 	
+       63	         1012 	
+       64	         1074 	
+       65	         1022 	
+       66	         1003 	
+       67	         1082 	
+       68	          987 	
+       69	          996 	
+       70	          972 	
+       71	         1042 	
+       72	         1024 	
+       73	         1028 	
+       74	         1082 	
+       75	          999 	
+       76	         1050 	
+       77	         1009 	
+       78	         1019 	
+       79	         1007 	
+       80	         1030 	
+       81	         1033 	
+       82	         1021 	
+       83	         1039 	
+       84	         1051 	
+       85	         1044 	
+       86	         1048 	
+       87	         1015 	
+       88	          974 	
+       89	          994 	
+       90	         1040 	
+       91	         1011 	
+       92	         1047 	
+       93	         1009 	
+       94	         1011 	
+       95	          983 	
+       96	         1050 	
+       97	         1034 	
+       98	         1047 	
+       99	         1014 	
+      100	          996 	
+      101	         1070 	
+      102	         1043 	
+      103	         1000 	
+      104	         1013 	
+      105	         1017 	
+      106	          992 	
+      107	         1021 	
+      108	         1085 	
+      109	         1027 	
+      110	         1031 	
+      111	         1041 	
+      112	         1057 	
