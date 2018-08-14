@@ -1,4 +1,4 @@
-#import Bloch
+import Bloch
 import matplotlib.pyplot as plt
 import angleCalc as ang
 import os, sys
@@ -41,8 +41,8 @@ for oneFile in files:
             theta, phi = ang.stokesVectorToPolar(measuredStokesVector)
             thetasMeasured.append(math.degrees(theta))
             phisMeasured.append(math.degrees(phi))
-            #Bloch.stokesToVector(expectedStokesVector, 'b')
-            #Bloch.diffVector(expectedStokesVector, measuredStokesVector, 'r')
+            Bloch.stokesToVector(expectedStokesVector, 'b')
+            Bloch.diffVector(expectedStokesVector, measuredStokesVector, 'r')
         os.chdir('..')
 
 with open('measuredData.txt', 'w') as measured:
@@ -53,4 +53,4 @@ with open('expectedData.txt', 'w') as expected:
     for i in range(0, len(thetasExpected)):
         expected.write(str(phisExpected[i]) + ',' + str(thetasExpected[i]) + ',' + str(lengthsExpected[i]) + '\n')
 
-#Bloch.show()
+Bloch.show()
