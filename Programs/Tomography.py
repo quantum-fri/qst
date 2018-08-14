@@ -23,7 +23,7 @@ def rotateOnX(stokes, theta):
 def rotateOnY(stokes, theta):
     return [stokes[0] * np.cos(theta) + stokes[2] * np.sin(theta), stokes[1], stokes[2] * np.cos(theta) - stokes[0] * np.sin(theta)]
 
-fancy = True
+fancy = False
 if fancy:
     ##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
     if not useOldTet:
@@ -143,7 +143,8 @@ if mixed:
     expected = np.real(funcs.getStokesParams(expected))
 else:
     ###Pure state fid calculation
-    expected = np.array(funcs.qPlateStateCalc(0))
+    angle = int(sys.argv[1][-3:].strip('-q'))
+    expected = np.array(funcs.qPlateStateCalc(angle))
     f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
 
 ###Printing results and writing to log file plus some adjustments to make parsing the log file easier
@@ -171,4 +172,4 @@ with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
 Bloch.stokesToVector(stokesVector, "r")
 for vert in tetrahedronVerticesReal:
     Bloch.stokesToVector(vert, 'g')
-Bloch.show()
+#Bloch.show()

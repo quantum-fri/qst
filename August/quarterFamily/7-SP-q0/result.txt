@@ -1,7 +1,12 @@
 ## SIC POVM ##
-## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity ##
-(1+0j),0j
-[0.42927167506817066, -0.23584044175669289, 0.60265884094944777]
-[0.012389369937207961, -0.0060118806797584967, 0.0078957365176319794]
-0.801329420475
-0.00394786825882
+## Order of data: expected state, bloch vector, error on elements of bloch vector, fidelity, error on fidelity, stokes of each vertex of the tetrahedron ##
+[[1.+0.j]
+ [0.+0.j]]
+[0.4292716737037725, -0.2358404314854144, 0.6026588390339556]
+[0.012317061664314566, -0.002529635745638581, 0.007795777205973575]
+(0.8013294195169776+0j)
+(0.0038978886029867876+0j)
+[0. 1. 0.]
+[ 0.       -0.333807  0.942641]
+[ 0.816351 -0.333807 -0.471321]
+[-0.816351 -0.333807 -0.471321]

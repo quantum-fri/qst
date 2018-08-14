@@ -25,8 +25,10 @@ for oneFile in files:
             lines = [line.rstrip('\n') for line in myData]
             lines = lines [2:]
             #need to parse expected
-            expectedString = lines[0].split(',')
-            expected = np.matrix([[complex(expectedString[0])], [complex(expectedString[1])]])
+            expectedStringOne = lines[0].strip('[[ ]')
+            expectedStringTwo = lines[1].strip('[ ]]')
+            print(expectedStringOne)
+            expected = np.matrix([[complex(expectedStringOne)], [complex(expectedStringTwo)]])
             expectedStokesVector = ang.stateVectorToStokesVector(expected)
             #Record data for graph
             lengthsExpected.append(ang.stokesLength(expectedStokesVector))
@@ -34,7 +36,7 @@ for oneFile in files:
             thetasExpected.append(math.degrees(theta))
             phisExpected.append(math.degrees(phi))
             
-            measuredString = lines[1].strip('[ ]').split(',')
+            measuredString = lines[2].strip('[ ]').split(',')
             measuredStokesVector = [float(val) for val in measuredString]
             #Record data for graph
             lengthsMeasured.append(ang.stokesLength(measuredStokesVector))
