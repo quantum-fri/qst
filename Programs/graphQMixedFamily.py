@@ -42,8 +42,8 @@ for oneFile in files:
             theta, phi = ang.stokesVectorToPolar(measuredStokesVector)
             thetasMeasured.append(math.degrees(theta))
             phisMeasured.append(math.degrees(phi))
-            Bloch.stokesToVector(expectedStokesVector, 'b')
-            Bloch.diffVector(expectedStokesVector, measuredStokesVector, 'r')
+            Bloch.stokesToVector(measuredStokesVector, 'r')
+            #Bloch.diffVector(expectedStokesVector, measuredStokesVector, 'r')
         os.chdir('..')
 
 with open('measuredData.txt', 'w') as measured:

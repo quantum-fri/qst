@@ -6,7 +6,7 @@ import math
 import Jul13QstFunctions as funcs
 
 #path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\quarterFamily"
-path = '/Users/charlie.goode/qst/August/quarterFamily'
+path = '/Users/charlie.goode/qst/August/lzr'
 os.chdir(path)
 
 thetasExpected = []
@@ -19,13 +19,15 @@ lengthsMeasured = []
 
 
 dotSizeFactor = 50
-with open('expectedData.txt', 'r') as expected:
-    lines = [line.rstrip('\n') for line in expected]
-    for line in lines:
-        strList = line.split(',')
-        phisExpected.append(float(strList[0]))
-        thetasExpected.append(float(strList[1]))
-        lengthsExpected.append(dotSizeFactor * float(strList[2]))
+readExpected = False
+if readExpected:
+    with open('expectedData.txt', 'r') as expected:
+        lines = [line.rstrip('\n') for line in expected]
+        for line in lines:
+            strList = line.split(',')
+            phisExpected.append(float(strList[0]))
+            thetasExpected.append(float(strList[1]))
+            lengthsExpected.append(dotSizeFactor * float(strList[2]))
 
 with open('measuredData.txt', 'r') as measured:
     lines = [line.rstrip('\n') for line in measured]
@@ -38,14 +40,14 @@ with open('measuredData.txt', 'r') as measured:
 
 phisMeasured = [val - 360 if val > 120 else val for val in phisMeasured]
 # Graph the data
-expectGraph = plt.scatter(phisExpected, thetasExpected, s=lengthsExpected, c='b')
+if readExpected:
+    expectGraph = plt.scatter(phisExpected, thetasExpected, s=lengthsExpected, c='b')
 measuredGraph = plt.scatter(phisMeasured, thetasMeasured, s=lengthsMeasured, c= 'r')
 
-
-thetasDiff = np.array(thetasMeasured) - np.array(thetasExpected)
-phisDiff = np.array(phisMeasured) - np.array(phisExpected)
-
-plt.quiver(phisExpected, thetasExpected, phisDiff, thetasDiff,angles='xy', scale_units='xy', scale=1)
+if readExpected:
+    thetasDiff = np.array(thetasMeasured) - np.array(thetasExpected)
+    phisDiff = np.array(phisMeasured) - np.array(phisExpected)
+    plt.quiver(phisExpected, thetasExpected, phisDiff, thetasDiff,angles='xy', scale_units='xy', scale=1)
 
 
 # Graph some reference points (known states)
@@ -58,9 +60,12 @@ for i in range(0, len(states)):
 
 
 # Label graph
-plt.title("Measured states of quarter waveplate + laser mixed family")
+plt.title("Measured states raw laser with random tetrahedron")
 plt.xlabel("phi of polar coordinates for points (degrees)")
 plt.ylabel("theta of polar coordinates for points (degrees)")
-plt.legend((expectGraph, measuredGraph), ("Expected States", "Measured States"))
+if readExpected:
+    plt.legend((measuredGraph,), ("Measured States",))
+else:
+    plt.legend((measuredGraph,), ("Measured States",))
 plt.grid()
 plt.show()

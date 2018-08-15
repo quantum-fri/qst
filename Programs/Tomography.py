@@ -23,7 +23,9 @@ def rotateOnX(stokes, theta):
 def rotateOnY(stokes, theta):
     return [stokes[0] * np.cos(theta) + stokes[2] * np.sin(theta), stokes[1], stokes[2] * np.cos(theta) - stokes[0] * np.sin(theta)]
 
-fancy = False
+
+doRandomTetrahedron = False
+specialReverseTomography = True
 if fancy:
     ##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
     if not useOldTet:
@@ -51,20 +53,18 @@ if fancy:
 else: 
     tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector(ang.stateCalc(0, 0))]
     for i in range(0,3):
-        tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))
-
+        tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))    
     ###Adjusts ideal states to those we can actually measure
     ###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
-    measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
+    measuringAngleInputsIdeal = [ang.waveplateToConstructPsi(stokesVector) if specialReverseTomography else ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
     ###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
     measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
-    tetrahedronVerticesReal = [ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
+    tetrahedronVerticesReal = [ang.constructedStokeVector(*angles) if specialReverseTomography else ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
 
 
 if not useOldTet:
     #pass measuringAngleInputsReal to Kinesis/ahk
     with open("runData.txt", "w") as output:
-        #print("Inside the loop")
         for row in measuringAngleInputsReal:
             output.write(str(row[0]) + " " + str(row[1]) + "\n")
 
@@ -78,17 +78,9 @@ for fileNr in fileList:
     fileName = os.path.join(sys.argv[1], fileNr + ".txt")
     #Waits for each file to come in
     while not os.path.exists(fileName):
-        #print("waiting for", fileName)
-        #print("in dir", os.listdir(sys.argv[1]))
         time.sleep(5) 
-    
-             
-    print("Found file", fileName)
-    resultList.append(funcs.getMeanVar(fileName))
-   
 
-print("done reading files", resultList)
-print("-------------------------------")
+    resultList.append(funcs.getMeanVar(fileName))
 
 #Calculating the unknown vector and corresponding error - see lab manual for justification of our math
 #See other lab manual and Jul13QstFunctions.py for more documentation on purpose and use of ei for error analysis
@@ -113,8 +105,6 @@ for i in range(0, len(resultList)):
     unknownStateVector.append(res[0])
     unknownErrorVector.append(res[1])
 
-print("Done with most calculation", unknownStateVector)
-print("-------------------------------")
 #Divide out the constant coefficient from the unknown vector of stokes parameters
 #We can do this because we know the first one ought to be identity with expectation of 1
 #We once again do this calculation through ei to our error values through properly
@@ -132,7 +122,8 @@ for i in range(0, len(unknownStateVector)):
 stokesVector = stokesVector [1:]
 stokesError = stokesError[1:]
 stokesVector, stokesError = funcs.smush(stokesVector, stokesError)
-mixed = False
+
+mixed = False ### Toggle for relevant fidelity calculation
 if mixed:
     ###Mixed state fid calculation
     laser = [-0.5725387770565411, -0.79288381938069186, -0.20864946137214577]
