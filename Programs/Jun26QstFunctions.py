@@ -277,5 +277,5 @@ def main(expected):
 	print("Old Density Matrix")
 	print(densityMatrix(smushParams))
 	print("The length of the vector is: ", stokesLength(getStokesParams(rho)))
-	Bloch.stokesToVector(smushParams)
+	Bloch.stokesToVector(smushParams, "r")
 	Bloch.show()
