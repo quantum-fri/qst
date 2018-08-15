@@ -81,9 +81,9 @@ Loop, Read, runData.txt
     Loop, parse, A_LoopReadLine, %A_Space%
     {
         if (A_Index = 1) {
-            anglesQuarter.push(A_LoopField)
-        } else {
             anglesHalf.push(A_LoopField)
+        } else {
+            anglesQuarter.push(A_LoopField)
         }
     }
 }
@@ -93,8 +93,8 @@ hPrev := 0
 
 For i, fileName in files {
 
-    q := Mod(336 - anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
-    h := Mod(305 - anglesHalf[i], 360)  
+    q := Mod(347 - anglesQuarter[i], 360) ;Calculate the proper angle to input into rotators 
+    h := Mod(108 - anglesHalf[i], 360)  
 
    
     WinActivate, Kinesis,, Thorlabs Sqsingle Photon Counter GUI

@@ -5,8 +5,8 @@ import numpy as np
 import math
 import Jul13QstFunctions as funcs
 
-#path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\quarterFamily"
-path = '/Users/charlie.goode/qst/August/lzr'
+path = "C:\\Users\\quantum\\Desktop\\QST experiments\\August\\collimatorExperiment"
+#path = '/Users/charlie.goode/qst/August/lzr'
 os.chdir(path)
 
 thetasExpected = []
@@ -60,7 +60,7 @@ for i in range(0, len(states)):
 
 
 # Label graph
-plt.title("Measured states raw laser with random tetrahedron")
+plt.title("Reverse Tomography on Collimator through Random Tetrahedron")
 plt.xlabel("phi of polar coordinates for points (degrees)")
 plt.ylabel("theta of polar coordinates for points (degrees)")
 if readExpected:

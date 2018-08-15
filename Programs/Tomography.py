@@ -24,9 +24,9 @@ def rotateOnY(stokes, theta):
     return [stokes[0] * np.cos(theta) + stokes[2] * np.sin(theta), stokes[1], stokes[2] * np.cos(theta) - stokes[0] * np.sin(theta)]
 
 
-doRandomTetrahedron = False
+doRandomTetrahedron = True
 specialReverseTomography = True
-if fancy:
+if doRandomTetrahedron:
     ##Generates a regular tetrahedron with each point on the surface of the bloch sphere. One point is the right circularly-polarized state
     if not useOldTet:
         tetrahedronVerticesIdeal = [ang.stateVectorToStokesVector(ang.stateCalc(0, 0))]
@@ -37,12 +37,12 @@ if fancy:
         rot1 = rand.uniform(0, 2*math.pi)
         rot2 = rand.uniform(0, 2*math.pi)
         tetrahedronVerticesIdeal = [rotateOnY(rotateOnX(stokesVector, rot1), rot2) for stokesVector in tetrahedronVerticesIdeal]
-        ###Adjusts ideal states to those we can actually measure
+         ###Adjusts ideal states to those we can actually measure
         ###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
-        measuringAngleInputsIdeal = [ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
+        measuringAngleInputsIdeal = [ang.waveplatesToConstructPsi(stokesVector) if specialReverseTomography else ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
         ###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
         measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
-        tetrahedronVerticesReal = [ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
+        tetrahedronVerticesReal = [ang.constructedStokesVector(*angles) if specialReverseTomography else ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
     else:
         tetrahedronVerticesReal = []
         with open(os.path.join(sys.argv[1], "result.txt"), "r") as oldAngs:
@@ -56,19 +56,16 @@ else:
         tetrahedronVerticesIdeal.append(ang.stateVectorToStokesVector(ang.stateCalc(109.5, i*120)))    
     ###Adjusts ideal states to those we can actually measure
     ###Following line removes the initial ones in each row because they do not contribute to our measuring angle inputs
-    measuringAngleInputsIdeal = [ang.waveplateToConstructPsi(stokesVector) if specialReverseTomography else ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
+    measuringAngleInputsIdeal = [ang.waveplatesToConstructPsi(stokesVector) if specialReverseTomography else ang.waveplatesToMeasurePsi(stokesVector) for stokesVector in tetrahedronVerticesIdeal]
     ###Round values based on rotator precision and pass them back in so we know what states we are actually measuring
     measuringAngleInputsReal = np.round(measuringAngleInputsIdeal, 5)
-    tetrahedronVerticesReal = [ang.constructedStokeVector(*angles) if specialReverseTomography else ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
-
+    tetrahedronVerticesReal = [ang.constructedStokesVector(*angles) if specialReverseTomography else ang.measuredStokesVector(*angles) for angles in measuringAngleInputsReal]
 
 if not useOldTet:
     #pass measuringAngleInputsReal to Kinesis/ahk
     with open("runData.txt", "w") as output:
         for row in measuringAngleInputsReal:
             output.write(str(row[0]) + " " + str(row[1]) + "\n")
-
-
 
 fileList = ["0", "1", "2", "3"]
 #Reads data
@@ -134,8 +131,8 @@ if mixed:
     expected = np.real(funcs.getStokesParams(expected))
 else:
     ###Pure state fid calculation
-    angle = int(sys.argv[1][-3:].strip('-q'))
-    expected = np.array(funcs.qPlateStateCalc(angle))
+    #angle = int(sys.argv[1][-3:].strip('-q'))
+    expected = ang.stateCalc(0,0)
     f = lambda x,y,z: funcs.fidelity([x,y,z], expected)
 
 ###Printing results and writing to log file plus some adjustments to make parsing the log file easier
@@ -158,9 +155,8 @@ with open(os.path.join(sys.argv[1], "result.txt"), "w") as result:
     result.write(str(tetrahedronVerticesReal[2]) + "\n")
     result.write(str(tetrahedronVerticesReal[3]) + "\n")
 
-
 ###Graphing the results
 Bloch.stokesToVector(stokesVector, "r")
 for vert in tetrahedronVerticesReal:
     Bloch.stokesToVector(vert, 'g')
-#Bloch.show()
+Bloch.show()
